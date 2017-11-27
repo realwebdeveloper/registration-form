@@ -6,7 +6,7 @@ export default class Input extends Component {
     this.state ={
       value:"",
       message:"",
-      validate: true
+      validate: false
     }
   }
   render() {
