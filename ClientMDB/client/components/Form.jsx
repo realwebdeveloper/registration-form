@@ -47,7 +47,7 @@ export default class Form extends Component {
           label = "Email"
           property = "email"
           validateAndMessage = {[
-            {regExp: '^[a-z0-9\.]+[a-z0-9]@[a-z]+\\.([a-z]+\\.)*[a-z0-9]+$', message: '', valid: true},
+            {regExp: '^[a-z0-9\\.]*[a-z0-9]@[a-z]+\\.([a-z]+\\.)*[a-z0-9]+$', message: '', valid: true},
             {regExp: '\w*', message: 'Your email is not valid', valid: false}
           ]}
           changeHandle = {this._changHandle}

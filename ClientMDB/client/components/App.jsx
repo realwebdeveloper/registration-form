@@ -11,17 +11,12 @@ export default class App extends Component {
   }
   render() {
     return (
-<<<<<<< HEAD
-      <Form addUserInfo={this._addUserInfo}/>
-
-=======
       <div>
         <Form addUserInfo={this._addUserInfo}/>
         <Table 
           listUserInfo = {this.state.listUserInfo}
         />
       </div>
->>>>>>> c1357beb7639b0449495b8ad9b34ef869c2e84ea
     );
   }
   _addUserInfo = (userInfo) => {

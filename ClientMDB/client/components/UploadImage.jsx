@@ -22,7 +22,6 @@ export default class UploadImage extends Component {
     );
   }
   _changeHandle = (e) => {
-<<<<<<< HEAD
     img = window.URL.createObjectURL(e.target.files[0]);
     this.setState({
       src: img,
@@ -43,8 +42,5 @@ export default class UploadImage extends Component {
     var dataURL = canvas.toDataURL("image/png");
 
     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-=======
-    
->>>>>>> c1357beb7639b0449495b8ad9b34ef869c2e84ea
   }
 }
