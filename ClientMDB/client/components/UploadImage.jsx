@@ -20,7 +20,7 @@ export default class UploadImage extends Component {
       </div>
     );
   }
-  _changeHandle(e) {
+  _changeHandle = (e) => {
     
   }
 }

@@ -57,7 +57,9 @@ export default class Form extends Component {
           type = "date"
           label = "DOB"
           property = "DOB"
-          validateAndMessage = {[]}
+          validateAndMessage = {[
+            { regExp: '^.{0,0}$', message: 'Not valid date', valid: false }
+          ]}
           changeHandle = {this._changHandle}
           validate = {this.state.validate.DOB}
         />
@@ -86,7 +88,7 @@ export default class Form extends Component {
       </div>
     );
   }
-  _changHandle(property, value, validate) {
+  _changHandle = (property, value, validate) => {
     let newInfo = Object.keys(this.state.info).map(key => {
       return this.state.info[key]
     });
@@ -100,7 +102,7 @@ export default class Form extends Component {
       validate: newValidate
     })
   }
-  _addUserInfo() {
+  _addUserInfo = () => {
     this.props.addUserInfo(this.state)
   }
 }
