@@ -5,7 +5,7 @@ export default class Choice extends Component {
     super(props);
     this.state = {
       value: '',
-      validate: false
+      validate: false,
     }
   }
   render() {
@@ -13,23 +13,22 @@ export default class Choice extends Component {
     return (
       <div>
         <label> {label} </label>
-        <div>
-          {
-            optionList.map((element, index) => {
-              return (
-                <div key={index}>
-                  <input 
-                    type = {type}
-                    name = {property}
-                    value = {element.value}
-                    onClick = {() => {this._changeHandle(label, element.value)}}
-                  />
-                  <label>{element.key}</label>
-                </div>
-              )
-            })
-          }
-        </div>
+        {
+          optionList.map((element, index) => {
+            return (
+              <div key={index}>
+                <input 
+                  type = {type}
+                  name = {property}
+                  value = {element.value}
+                  onClick = {() => {this._changeHandle(label, element.value)}}
+                />
+                <label>{element.key}</label>
+              </div>
+            )
+          })
+        }
+        <label>{!validate && "You need to choose one"}</label>
       </div>
     );
   }
