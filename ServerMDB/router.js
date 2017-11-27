@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const database = require('./database');
 
-const staticBasePath = '../ClientMDB/dist';
+const staticBasePath = '../ClientMDB/dist/';
 
 
 exports.handleRequest = function (request, response) {
@@ -60,7 +60,7 @@ exports.handleRequest = function (request, response) {
         if (method === 'GET'){
             switch (url) {
                 case "/":
-                    fs.readFile('../client/static-file/index.html', function (error, pageRes) {
+                    fs.readFile('../ClientMDB/dist/index.html', function (error, pageRes) {
                         if (error) {
                             response.writeHead(404);
                             response.write('Contents you are looking are Not Found');
