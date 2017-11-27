@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Form from './Form.jsx'
-
+import Form from './Form.jsx';
+import Table from './Table.jsx';
 
 export default class App extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ export default class App extends Component {
       </div>
     );
   }
-  _addUserInfo(userInfo) {
+  _addUserInfo = (userInfo) => {
     let newListUserInfo = this.state.listUserInfo.map((user, index) => {
       return user;
     })
