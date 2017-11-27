@@ -15,7 +15,7 @@ exports.handleRequest = function (request, response) {
         switch (method) {
             case 'GET':
                 switch (api_url) {
-                    case 'peopleList':
+                    case 'ListUserInfo':
                         response.writeHead(200, { 'Content-Type': 'text/html' });
                         database.queryAll(function (data) {
                             response.write(data);
@@ -31,7 +31,7 @@ exports.handleRequest = function (request, response) {
                 break;
             case 'POST':
                 switch (api_url) {
-                    case 'people':
+                    case 'uploadUserInfo':
                         var body = '';
                         var json = {};
                         request.on('data', (chunk) => {

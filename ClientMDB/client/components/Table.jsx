@@ -23,9 +23,14 @@ export default class Table extends Component {
                 <tr key={index}>
                   {
                     Object.keys(element).map(key => {
-                      return (
-                        <td>{element.key}</td>
-                      )
+                      if (key !== '_id'){
+                        return (
+                          <td>{element.key}</td>
+                        ); 
+                      }
+                      else {
+                        return (null);
+                      }
                     })
                   }
                 </tr>
