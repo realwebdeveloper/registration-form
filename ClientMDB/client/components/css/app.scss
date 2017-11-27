@@ -1,10 +1,28 @@
 #root {
-    margin: 75px 200px;
-    padding: 15px 30px;
-    border: 5px double gray;
-    border-radius: 15px;
-    line-height: 40px;
-    font-size: 20px;
+    > div {
+        margin: 75px 200px;
+        padding: 15px 30px;
+        border: 5px double gray;
+        border-radius: 15px;
+        line-height: 40px;
+        font-size: 20px;
+        &:first-child {
+            > div {
+                &:first-child {
+                    input {
+                       display: none;
+                    }
+                    label {
+                        border: 1px solid skyblue;
+                        border-radius: 7px;
+                        background-color: skyblue;
+                        padding: 5px;
+                        margin-left: 5px;
+                    }
+                }
+            }
+        }
+    }
 }
 
 label {
@@ -16,9 +34,11 @@ input {
     border-radius: 5px;
     margin-left: 20px;
     height: 20px;
+    // float: right;
 }
 
 select {
     border-radius: 5px;
     margin-left: 10px;
+    // float: right;
 }
