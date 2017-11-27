@@ -3,7 +3,7 @@ import Input from './Input.jsx';
 import Select from './Select.jsx';
 import Choice from './Choice.jsx';
 import UploadImage from './UploadImage.jsx'
-
+import './css/app.scss';
 
 export default class App extends Component {
   constructor(props) {
