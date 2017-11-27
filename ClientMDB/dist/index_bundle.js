@@ -18475,10 +18475,6 @@ var Form = function (_Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_UploadImage2.default, {
-          src: '',
-          label: 'Upload Picture'
-        }),
         _react2.default.createElement(_Input2.default, {
           type: 'text',
           label: 'Name',
@@ -18865,17 +18861,39 @@ var UploadImage = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (UploadImage.__proto__ || Object.getPrototypeOf(UploadImage)).call(this, props));
 
-    _this._changeHandle = function (e) {};
+    _this._changeHandle = function (e) {
+      img = window.URL.createObjectURL(e.target.files[0]);
+      _this.setState({
+        src: img,
+        validate: true
+      }, function () {
+        _this.props.changeHandle(_this.props.property, _this.state.src, _this.state.validate);
+      });
+    };
 
-    _this.state = {};
+    _this.getBase64Image = function () {
+      var img = document.getElementById(_this.props.id);
+      var canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      var ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+
+      var dataURL = canvas.toDataURL("image/png");
+
+      return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+    };
+
+    _this.state = {
+      src: _this.props.src
+    };
     return _this;
   }
 
   _createClass(UploadImage, [{
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
       var _props = this.props,
           src = _props.src,
           label = _props.label;
@@ -18883,14 +18901,12 @@ var UploadImage = function (_Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement('img', { src: src, alt: label }),
+        _react2.default.createElement('img', { src: this.state.src, alt: label, id: this.props.id }),
         _react2.default.createElement(
           'label',
           null,
           _react2.default.createElement('input', { type: 'file', accept: 'image/*',
-            onClick: function onClick() {
-              _this2._changeHandle(e);
-            }
+            onClick: this._changeHandle.bind(this)
           }),
           label
         )

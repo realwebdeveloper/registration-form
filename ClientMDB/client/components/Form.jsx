@@ -27,10 +27,11 @@ export default class Form extends Component {
   render() {
     return (
       <div>
-        <UploadImage 
+        {/* <UploadImage 
           src = ''
           label = 'Upload Picture'
-        />
+          id= 'user-picture'
+        /> */}
         <Input 
           type = "text"
           label = "Name"

@@ -11,7 +11,7 @@ export default class UploadImage extends Component {
     const {src, label} = this.props;
     return (
       <div>
-        <img src={this.state.src} alt={label}/>
+        <img src={this.state.src} alt={label} id = {this.props.id}/>
         <label>
           <input type='file' accept='image/*'
             onClick = {this._changeHandle.bind(this)}
@@ -30,8 +30,8 @@ export default class UploadImage extends Component {
       this.props.changeHandle(this.props.property, this.state.src, this.state.validate);
     })
   }
-  getBase64Image() {
-    var img = document.getElementById("user-picture");
+  getBase64Image = () => {
+    var img = document.getElementById(this.props.id);
     var canvas = document.createElement("canvas");
     canvas.width = img.width;
     canvas.height = img.height;
