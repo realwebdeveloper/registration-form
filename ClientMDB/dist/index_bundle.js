@@ -18276,6 +18276,10 @@ var _Form = __webpack_require__(28);
 
 var _Form2 = _interopRequireDefault(_Form);
 
+var _Table = __webpack_require__(33);
+
+var _Table2 = _interopRequireDefault(_Table);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -18292,12 +18296,28 @@ var App = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
+    _this._addUserInfo = function (userInfo) {
+      debugger;
+      var newListUserInfo = _this.state.listUserInfo.map(function (user, index) {
+        return user;
+      });
+      for (var key in userInfo.validate) {
+        if (userInfo.validate[key] == false) return;
+      }
+      _this.pushToServer(userInfo.info);
+    };
+
     _this.pushToServer = function (data) {
+      debugger;
+      var getServerData = _this.getServerData;
+
       var xhr = new XMLHttpRequest();
       xhr.withCredentials = true;
 
       xhr.addEventListener("readystatechange", function () {
-        if (this.readyState === 4) {}
+        if (this.readyState === 4) {
+          getServerData();
+        }
       });
 
       xhr.open("POST", "http://localhost:8080/api/uploadUserInfo");
@@ -18305,13 +18325,15 @@ var App = function (_Component) {
       xhr.send(JSON.stringify(data));
     };
 
-    _this.updateUserInfoList = function (data) {
+    _this.updateListUserInfo = function (data) {
+      debugger;
       _this.setState({
         listUserInfo: data
       });
     };
 
-    _this.getSererData = function () {
+    _this.getServerData = function () {
+      debugger;
       var updateListUserInfo = _this.updateListUserInfo;
 
       var xhr = new XMLHttpRequest();
@@ -18341,21 +18363,15 @@ var App = function (_Component) {
         'div',
         null,
         _react2.default.createElement(_Form2.default, { addUserInfo: this._addUserInfo }),
-        _react2.default.createElement(Table, {
+        _react2.default.createElement(_Table2.default, {
           listUserInfo: this.state.listUserInfo
-        })
+        }),
+        _react2.default.createElement(
+          'button',
+          { onClick: this.getServerData },
+          'GET'
+        )
       );
-    }
-  }, {
-    key: '_addUserInfo',
-    value: function _addUserInfo(userInfo) {
-      var newListUserInfo = this.state.listUserInfo.map(function (user, index) {
-        return user;
-      });
-      for (key in userInfo.validate) {
-        if (userInfo.validate[key] == false) return;
-      }
-      this.pushToServer(userInfo.info);
     }
   }]);
 
@@ -18413,13 +18429,34 @@ var Form = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, props));
 
+    _this._changHandle = function (property, value, validate) {
+      // let newInfo = Object.keys(this.state.info).map(key => {
+      //   return this.state.info[key]
+      // });
+      var newInfo = JSON.parse(JSON.stringify(_this.state.info));
+      // let newValidate = Object.keys(this.state.validate).map(key => {
+      //   return this.state.validate[key]
+      // });
+      var newValidate = JSON.parse(JSON.stringify(_this.state.validate));
+      newInfo[property] = value;
+      newValidate[property] = validate;
+      _this.setState({
+        info: newInfo,
+        validate: newValidate
+      });
+    };
+
+    _this._addUserInfo = function () {
+      _this.props.addUserInfo(_this.state);
+    };
+
     _this.state = {
       info: {
         name: '',
         email: '',
         DOB: '',
         gender: '',
-        city: ''
+        city: 'Ho Chi Minh'
       },
       validate: {
         name: false,
@@ -18454,7 +18491,7 @@ var Form = function (_Component) {
           type: 'text',
           label: 'Email',
           property: 'email',
-          validateAndMessage: [{ regExp: '^[a-z0-9\.]+[a-z0-9]@[a-z]+\\.([a-z]+\\.)*[a-z0-9]+$', message: '', valid: true }, { regExp: '\w*', message: 'Your email is not valid', valid: false }],
+          validateAndMessage: [{ regExp: '^[a-z0-9\\.]*[a-z0-9]@[a-z]+\\.([a-z]+\\.)*[a-z0-9]+$', message: '', valid: true }, { regExp: '\w*', message: 'Your email is not valid', valid: false }],
           changeHandle: this._changHandle,
           validate: this.state.validate.email
         }),
@@ -18462,14 +18499,14 @@ var Form = function (_Component) {
           type: 'date',
           label: 'DOB',
           property: 'DOB',
-          validateAndMessage: [],
+          validateAndMessage: [{ regExp: '^.{0,0}$', message: 'Not valid date', valid: false }],
           changeHandle: this._changHandle,
           validate: this.state.validate.DOB
         }),
         _react2.default.createElement(_Select2.default, {
           label: 'City',
           property: 'city',
-          optionList: [{ key: 'Ho Chi Minh', value: 'hochiminh' }, { key: 'Da Nang', value: 'danang' }, { key: 'Ha Noi', value: 'hanoi' }],
+          optionList: [{ key: 'Ho Chi Minh', value: 'Ho Chi Minh' }, { key: 'Da Nang', value: 'Da Nang' }, { key: 'Ha Noi', value: 'Ha Noi' }],
           changeHandle: this._changHandle
         }),
         _react2.default.createElement(_Choice2.default, {
@@ -18486,29 +18523,6 @@ var Form = function (_Component) {
           ' Submit '
         )
       );
-    }
-  }, {
-    key: '_changHandle',
-    value: function _changHandle(property, value, validate) {
-      var _this2 = this;
-
-      var newInfo = Object.keys(this.state.info).map(function (key) {
-        return _this2.state.info[key];
-      });
-      var newValidate = Object.keys(this.state.validate).map(function (key) {
-        return _this2.state.validate[key];
-      });
-      newInfo[property] = value;
-      newValidate[property] = validate;
-      this.setState({
-        info: newInfo,
-        validate: newValidate
-      });
-    }
-  }, {
-    key: '_addUserInfo',
-    value: function _addUserInfo() {
-      this.props.addUserInfo(this.state);
     }
   }]);
 
@@ -18550,6 +18564,32 @@ var Input = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
 
+    _this._changeHandle = function (label, e) {
+      debugger;
+      var newValue = e.target.value;
+      var newMessage = "";
+      var newValidate = true;
+      newValue = newValue.split(" ").filter(function (c) {
+        return c != "";
+      }).join(' ');
+      for (var i = 0; i < _this.props.validateAndMessage.length; ++i) {
+        var element = _this.props.validateAndMessage[i];
+        var checkRegExp = new RegExp(element.regExp);
+        if (checkRegExp.test(newValue)) {
+          newMessage = element.message;
+          newValidate = element.valid;
+          break;
+        }
+      }
+      _this.setState({
+        value: e.target.value,
+        message: newMessage,
+        validate: newValidate
+      }, function () {
+        _this.props.changeHandle(_this.props.property, _this.state.value, _this.state.validate);
+      });
+    };
+
     _this.state = {
       value: "",
       message: "",
@@ -18580,7 +18620,8 @@ var Input = function (_Component) {
         _react2.default.createElement("input", {
           value: this.state.value,
           type: type,
-          onChange: this._changeHandle.bind(this, label)
+          onChange: this._changeHandle.bind(this, label),
+          onBlur: this._changeHandle.bind(this, label)
         }),
         !this.state.validate && _react2.default.createElement(
           "label",
@@ -18588,35 +18629,6 @@ var Input = function (_Component) {
           this.state.message
         )
       );
-    }
-  }, {
-    key: "_changeHandle",
-    value: function _changeHandle(label, e) {
-      var _this2 = this;
-
-      debugger;
-      var newValue = e.target.value;
-      var newMessage = "";
-      var newValidate = true;
-      newValue = newValue.split(" ").filter(function (c) {
-        return c != "";
-      }).join(' ');
-      for (var i = 0; i < this.props.validateAndMessage.length; ++i) {
-        var element = this.props.validateAndMessage[i];
-        var checkRegExp = new RegExp(element.regExp);
-        if (checkRegExp.test(newValue)) {
-          newMessage = element.message;
-          newValidate = element.valid;
-          break;
-        }
-      }
-      this.setState({
-        value: e.target.value,
-        message: newMessage,
-        validate: newValidate
-      }, function () {
-        _this2.props.changeHandle(_this2.props.property, _this2.state.value, _this2.state.validate);
-      });
     }
   }]);
 
@@ -18657,6 +18669,15 @@ var Select = function (_Component) {
     _classCallCheck(this, Select);
 
     var _this = _possibleConstructorReturn(this, (Select.__proto__ || Object.getPrototypeOf(Select)).call(this, props));
+
+    _this._changeHandle = function (label, value) {
+      _this.setState({
+        value: value,
+        validate: true
+      }, function () {
+        _this.props.changeHandle(_this.props.property, _this.state.value, _this.state.validate);
+      });
+    };
 
     _this.state = {
       value: _this.props.optionList[0],
@@ -18701,18 +18722,6 @@ var Select = function (_Component) {
         )
       );
     }
-  }, {
-    key: '_changeHandle',
-    value: function _changeHandle(label, value) {
-      var _this3 = this;
-
-      this.setState({
-        value: value,
-        validate: true
-      }, function () {
-        _this3.props.changeHandle(_this3.props.property, _this3.state.value, _this3.state.validate);
-      });
-    }
   }]);
 
   return Select;
@@ -18752,6 +18761,15 @@ var Choice = function (_Component) {
     _classCallCheck(this, Choice);
 
     var _this = _possibleConstructorReturn(this, (Choice.__proto__ || Object.getPrototypeOf(Choice)).call(this, props));
+
+    _this._changeHandle = function (label, value) {
+      _this.setState({
+        value: value,
+        validate: true
+      }, function () {
+        _this.props.changeHandle(_this.props.property, _this.state.value, _this.state.validate);
+      });
+    };
 
     _this.state = {
       value: '',
@@ -18803,21 +18821,9 @@ var Choice = function (_Component) {
         _react2.default.createElement(
           'label',
           null,
-          !validate && "You need to choose one"
+          !this.state.validate && "You need to choose one"
         )
       );
-    }
-  }, {
-    key: '_changeHandle',
-    value: function _changeHandle(label, value) {
-      var _this3 = this;
-
-      this.setState({
-        value: value,
-        validate: true
-      }, function () {
-        _this3.props.changeHandle(_this3.props.property, _this3.state.value, _this3.state.validate);
-      });
     }
   }]);
 
@@ -18859,6 +18865,8 @@ var UploadImage = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (UploadImage.__proto__ || Object.getPrototypeOf(UploadImage)).call(this, props));
 
+    _this._changeHandle = function (e) {};
+
     _this.state = {};
     return _this;
   }
@@ -18888,15 +18896,124 @@ var UploadImage = function (_Component) {
         )
       );
     }
-  }, {
-    key: '_changeHandle',
-    value: function _changeHandle(e) {}
   }]);
 
   return UploadImage;
 }(_react.Component);
 
 exports.default = UploadImage;
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Table = function (_Component) {
+  _inherits(Table, _Component);
+
+  function Table(props) {
+    _classCallCheck(this, Table);
+
+    var _this = _possibleConstructorReturn(this, (Table.__proto__ || Object.getPrototypeOf(Table)).call(this, props));
+
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(Table, [{
+    key: 'render',
+    value: function render() {
+      var listUserInfo = this.props.listUserInfo;
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'table',
+          null,
+          _react2.default.createElement(
+            'thead',
+            null,
+            _react2.default.createElement(
+              'tr',
+              null,
+              _react2.default.createElement(
+                'th',
+                null,
+                ' Name '
+              ),
+              _react2.default.createElement(
+                'th',
+                null,
+                ' Email '
+              ),
+              _react2.default.createElement(
+                'th',
+                null,
+                ' DOB '
+              ),
+              _react2.default.createElement(
+                'th',
+                null,
+                ' Gender '
+              ),
+              _react2.default.createElement(
+                'th',
+                null,
+                ' City '
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'tbody',
+            null,
+            listUserInfo.map(function (element, index) {
+              return _react2.default.createElement(
+                'tr',
+                { key: index },
+                Object.keys(element).map(function (key) {
+                  if (key != '_id') {
+                    return _react2.default.createElement(
+                      'td',
+                      { key: element[key] },
+                      element[key]
+                    );
+                  } else {
+                    return null;
+                  }
+                })
+              );
+            })
+          )
+        )
+      );
+    }
+  }]);
+
+  return Table;
+}(_react.Component);
+
+exports.default = Table;
 
 /***/ })
 /******/ ]);
