@@ -13,7 +13,7 @@ export default class Form extends Component {
         email: '',
         DOB: '',
         gender: '',
-        city: ''
+        city: 'Ho Chi Minh'
       },
       validate: {
         name: false,
@@ -67,9 +67,9 @@ export default class Form extends Component {
           label = "City"
           property = "city"
           optionList = {[
-            {key: 'Ho Chi Minh', value: 'hochiminh'}, 
-            {key: 'Da Nang', value: 'danang'},
-            {key: 'Ha Noi', value: 'hanoi'}
+            {key: 'Ho Chi Minh', value: 'Ho Chi Minh'}, 
+            {key: 'Da Nang', value: 'Da Nang'},
+            {key: 'Ha Noi', value: 'Ha Noi'}
           ]}
           changeHandle = {this._changHandle}
         />
@@ -89,12 +89,14 @@ export default class Form extends Component {
     );
   }
   _changHandle = (property, value, validate) => {
-    let newInfo = Object.keys(this.state.info).map(key => {
-      return this.state.info[key]
-    });
-    let newValidate = Object.keys(this.state.validate).map(key => {
-      return this.state.validate[key]
-    });
+    // let newInfo = Object.keys(this.state.info).map(key => {
+    //   return this.state.info[key]
+    // });
+    let newInfo = JSON.parse(JSON.stringify(this.state.info));
+    // let newValidate = Object.keys(this.state.validate).map(key => {
+    //   return this.state.validate[key]
+    // });
+    let newValidate = JSON.parse(JSON.stringify(this.state.validate));
     newInfo[property] = value;
     newValidate[property] = validate;
     this.setState({

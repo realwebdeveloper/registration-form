@@ -26,9 +26,9 @@ export default class Table extends Component {
                   <tr key={index}>
                     {
                       Object.keys(element).map(key => {
-                        if (key !== '_id'){
+                        if (key != '_id'){
                           return (
-                            <td>{element.key}</td>
+                            <td key={element[key]}>{element[key]}</td>
                           ); 
                         }
                         else {
