@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const database = require('./database');
 
-const staticBasePath = '../client/static-file';
+const staticBasePath = '../ClientMDB/dist';
 
 
 exports.handleRequest = function (request, response) {
