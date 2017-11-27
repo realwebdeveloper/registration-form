@@ -11,6 +11,7 @@ export default class App extends Component {
   render() {
     return (
       <Form addUserInfo={this._addUserInfo}/>
+
     );
   }
   _addUserInfo(userInfo) {
