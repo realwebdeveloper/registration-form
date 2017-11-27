@@ -28,11 +28,11 @@ export default class Choice extends Component {
             )
           })
         }
-        <label>{!validate && "You need to choose one"}</label>
+        <label>{!this.state.validate && "You need to choose one"}</label>
       </div>
     );
   }
-  _changeHandle(label, value) {
+  _changeHandle = (label, value) => {
     this.setState({
       value: value,
       validate: true

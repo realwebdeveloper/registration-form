@@ -18,12 +18,13 @@ export default class Input extends Component {
           value = {this.state.value}
           type  = {type}
           onChange = {this._changeHandle.bind(this, label)}
+          onBlur = {this._changeHandle.bind(this, label)}
         />
         {!this.state.validate && <label>{this.state.message}</label>}
       </div>
     );
   }
-  _changeHandle(label, e) {
+  _changeHandle = (label, e) => {
     debugger
     let newValue = e.target.value;
     let newMessage = "";

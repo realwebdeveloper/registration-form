@@ -29,7 +29,7 @@ export default class Select extends Component {
       </div>
     );
   }
-  _changeHandle (label, value) {
+  _changeHandle = (label, value) => {
     this.setState({
       value: value,
       validate: true
