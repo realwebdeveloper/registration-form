@@ -39,7 +39,7 @@ export default class Table extends Component {
                           }
                           else {
                             return (
-                              <td>
+                              <td key={element[key]}>
                                 <img src={element[key]}/>
                               </td>
                             )

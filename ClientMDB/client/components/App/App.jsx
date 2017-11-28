@@ -9,6 +9,7 @@ export default class App extends Component {
     this.state = {
       listUserInfo: []
     }
+    this.getServerData();
   }
   render() {
     return (
@@ -17,7 +18,7 @@ export default class App extends Component {
         <Table 
           listUserInfo = {this.state.listUserInfo}
         />
-         <button onClick={this.getServerData}>GET</button>
+         {/* <button onClick={this.getServerData}>GET</button> */}
       </div>
     );
   }
@@ -39,7 +40,8 @@ export default class App extends Component {
     xhr.withCredentials = true;
 
     xhr.addEventListener("readystatechange", function () {
-      if (this.readyState === 4) {
+      console.log(this.readyState);
+      if (this.readyState === 1) {
         getServerData();
       }
     })

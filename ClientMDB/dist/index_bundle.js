@@ -18317,7 +18317,8 @@ var App = function (_Component) {
       xhr.withCredentials = true;
 
       xhr.addEventListener("readystatechange", function () {
-        if (this.readyState === 4) {
+        console.log(this.readyState);
+        if (this.readyState === 1) {
           getServerData();
         }
       });
@@ -18367,12 +18368,7 @@ var App = function (_Component) {
         _react2.default.createElement(_Form2.default, { addUserInfo: this._addUserInfo }),
         _react2.default.createElement(_Table2.default, {
           listUserInfo: this.state.listUserInfo
-        }),
-        _react2.default.createElement(
-          'button',
-          { onClick: this.getServerData },
-          'GET'
-        )
+        })
       );
     }
   }]);
@@ -19095,7 +19091,7 @@ var Table = function (_Component) {
                     } else {
                       return _react2.default.createElement(
                         'td',
-                        null,
+                        { key: element[key] },
                         _react2.default.createElement('img', { src: element[key] })
                       );
                     }
