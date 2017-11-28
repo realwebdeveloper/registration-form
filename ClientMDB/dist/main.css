@@ -41,6 +41,8 @@
     position: relative;
     left: 5px;
     width: 65%; }
+  .Select div {
+    height: 15px; }
 .Choice > label:first-of-type {
   display: inline-block;
   width: 30%;
@@ -84,6 +86,9 @@
     width: 160px;
     height: 160px;
     margin: 10px 50px 10px; }
+  .image p {
+    color: red;
+    font-size: 10px; }
   .image label {
     border-radius: 5px;
     background-color: #008cff;

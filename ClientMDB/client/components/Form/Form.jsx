@@ -33,7 +33,7 @@ export default class Form extends Component {
         <h1> Registration Form </h1>
         <div>
           <UploadImage 
-            src = ''
+            src = './Pictures/empty-picture.png'
             label = 'Upload Picture'
             id= 'user-picture'
             property = 'picture'

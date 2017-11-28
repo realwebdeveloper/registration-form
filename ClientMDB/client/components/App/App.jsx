@@ -42,6 +42,7 @@ export default class App extends Component {
     xhr.addEventListener("readystatechange", function () {
       console.log(this.readyState);
       if (this.readyState === 1) {
+        location.reload();
         getServerData();
       }
     })

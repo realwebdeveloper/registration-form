@@ -27,7 +27,8 @@ export default class Select extends Component {
               )
             })
           }
-        </select>        
+        </select>
+        <div></div>
       </div>
     );
   }

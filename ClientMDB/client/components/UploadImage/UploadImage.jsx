@@ -5,7 +5,9 @@ export default class UploadImage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      src: this.props.src
+      src: this.props.src,
+      message: "",
+      validate: false
     }
   }
   render() {
@@ -13,6 +15,9 @@ export default class UploadImage extends Component {
     return (
       <div className='image'>
         <img src={this.state.src} alt={label} id = {this.props.id}/>
+        { (!this.state.validate) && 
+          <p>Please upload an image.</p>
+        }
         <label>
           <input type='file' accept='image/*'
             onChange = {this._changeHandle.bind(this)}
@@ -29,7 +34,8 @@ export default class UploadImage extends Component {
       src: img,
       validate: true
     }, () => {
-      this.props.changeHandle(this.props.property, this.state.src, this.state.validate);
+      // let src = this.getBase64Image();
+      this.props.changeHandle(this.props.property, img, this.state.validate);
     })
   }
   getBase64Image = () => {
@@ -42,7 +48,8 @@ export default class UploadImage extends Component {
     ctx.drawImage(img, 0, 0, img.width, img.height);
 
     var dataURL = canvas.toDataURL("image/png");
-
+    
+    return dataURL;
     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
   }
 }
