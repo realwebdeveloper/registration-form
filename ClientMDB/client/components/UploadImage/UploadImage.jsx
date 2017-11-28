@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './UploadImage.scss'
 
 export default class UploadImage extends Component {
   constructor(props) {
@@ -10,7 +11,7 @@ export default class UploadImage extends Component {
   render() {
     const {src, label} = this.props;
     return (
-      <div>
+      <div className='image'>
         <img src={this.state.src} alt={label} id = {this.props.id}/>
         <label>
           <input type='file' accept='image/*'

@@ -18276,9 +18276,11 @@ var _Form = __webpack_require__(28);
 
 var _Form2 = _interopRequireDefault(_Form);
 
-var _Table = __webpack_require__(34);
+var _Table = __webpack_require__(37);
 
 var _Table2 = _interopRequireDefault(_Table);
+
+__webpack_require__(38);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18361,7 +18363,7 @@ var App = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'page' },
         _react2.default.createElement(_Form2.default, { addUserInfo: this._addUserInfo }),
         _react2.default.createElement(_Table2.default, {
           listUserInfo: this.state.listUserInfo
@@ -18405,13 +18407,15 @@ var _Select = __webpack_require__(31);
 
 var _Select2 = _interopRequireDefault(_Select);
 
-var _Choice = __webpack_require__(32);
+var _Choice = __webpack_require__(33);
 
 var _Choice2 = _interopRequireDefault(_Choice);
 
-var _UploadImage = __webpack_require__(33);
+var _UploadImage = __webpack_require__(35);
 
 var _UploadImage2 = _interopRequireDefault(_UploadImage);
+
+__webpack_require__(36);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18468,7 +18472,12 @@ var Form = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'wrapper' },
+        _react2.default.createElement(
+          'h1',
+          null,
+          ' Registration Form '
+        ),
         _react2.default.createElement(
           'div',
           null,
@@ -18477,49 +18486,49 @@ var Form = function (_Component) {
             label: 'Upload Picture',
             id: 'user-picture',
             changeHandle: this._changHandle
-          })
-        ),
-        _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(_Input2.default, {
-            type: 'text',
-            label: 'Name',
-            property: 'name',
-            validateAndMessage: [{ regExp: '(^| )[a-z]', message: 'Your name need capitalized', valid: false }, { regExp: '^.{0,7}$', message: 'Your name is at least 8 character', valid: false }],
-            changeHandle: this._changHandle,
-            validate: this.state.validate.name
           }),
-          _react2.default.createElement(_Input2.default, {
-            type: 'text',
-            label: 'Email',
-            property: 'email',
-            validateAndMessage: [{ regExp: '^[a-z0-9\\.]*[a-z0-9]@[a-z]+\\.([a-z]+\\.)*[a-z0-9]+$', message: '', valid: true }, { regExp: '\w*', message: 'Your email is not valid', valid: false }],
-            changeHandle: this._changHandle,
-            validate: this.state.validate.email
-          }),
-          _react2.default.createElement(_Input2.default, {
-            type: 'date',
-            label: 'DOB',
-            property: 'DOB',
-            validateAndMessage: [{ regExp: '^.{0,0}$', message: 'Not valid date', valid: false }],
-            changeHandle: this._changHandle,
-            validate: this.state.validate.DOB
-          }),
-          _react2.default.createElement(_Select2.default, {
-            label: 'City',
-            property: 'city',
-            optionList: [{ key: 'Ho Chi Minh', value: 'Ho Chi Minh' }, { key: 'Da Nang', value: 'Da Nang' }, { key: 'Ha Noi', value: 'Ha Noi' }],
-            changeHandle: this._changHandle
-          }),
-          _react2.default.createElement(_Choice2.default, {
-            label: 'Gender',
-            property: 'gender',
-            type: 'radio',
-            optionList: [{ key: 'Male', value: 'male' }, { key: 'Female', value: 'female' }],
-            changeHandle: this._changHandle,
-            validate: this.state.validate.gender
-          })
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(_Input2.default, {
+              type: 'text',
+              label: 'Name',
+              property: 'name',
+              validateAndMessage: [{ regExp: '(^| )[a-z]', message: 'Your name need capitalized', valid: false }, { regExp: '^.{0,7}$', message: 'Your name is at least 8 character', valid: false }],
+              changeHandle: this._changHandle,
+              validate: this.state.validate.name
+            }),
+            _react2.default.createElement(_Input2.default, {
+              type: 'text',
+              label: 'Email',
+              property: 'email',
+              validateAndMessage: [{ regExp: '^[a-z0-9\\.]*[a-z0-9]@[a-z]+\\.([a-z]+\\.)*[a-z0-9]+$', message: '', valid: true }, { regExp: '\w*', message: 'Your email is not valid', valid: false }],
+              changeHandle: this._changHandle,
+              validate: this.state.validate.email
+            }),
+            _react2.default.createElement(_Input2.default, {
+              type: 'date',
+              label: 'DOB',
+              property: 'DOB',
+              validateAndMessage: [{ regExp: '^.{0,0}$', message: 'Not valid date', valid: false }],
+              changeHandle: this._changHandle,
+              validate: this.state.validate.DOB
+            }),
+            _react2.default.createElement(_Select2.default, {
+              label: 'City',
+              property: 'city',
+              optionList: [{ key: 'Ho Chi Minh', value: 'Ho Chi Minh' }, { key: 'Da Nang', value: 'Da Nang' }, { key: 'Ha Noi', value: 'Ha Noi' }],
+              changeHandle: this._changHandle
+            }),
+            _react2.default.createElement(_Choice2.default, {
+              label: 'Gender',
+              property: 'gender',
+              type: 'radio',
+              optionList: [{ key: 'Male', value: 'male' }, { key: 'Female', value: 'female' }],
+              changeHandle: this._changHandle,
+              validate: this.state.validate.gender
+            })
+          )
         ),
         _react2.default.createElement(
           'button',
@@ -18552,9 +18561,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Input = __webpack_require__(30);
-
-var _Input2 = _interopRequireDefault(_Input);
+__webpack_require__(30);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18617,29 +18624,26 @@ var Input = function (_Component) {
           changeHandle = _props.changeHandle,
           validate = _props.validate;
 
-      console.log(_Input2.default.div);
       return _react2.default.createElement(
         'div',
-        { style: _Input2.default.div },
+        { className: 'Input' },
         _react2.default.createElement(
           'label',
           null,
-          label
+          label,
+          ' :'
         ),
-        _react2.default.createElement(
-          'div',
+        _react2.default.createElement('input', {
+          value: this.state.value,
+          type: type,
+          onChange: this._changeHandle.bind(this, label),
+          onBlur: this._changeHandle.bind(this, label)
+        }),
+        _react2.default.createElement('div', null),
+        !this.state.validate && _react2.default.createElement(
+          'label',
           null,
-          _react2.default.createElement('input', {
-            value: this.state.value,
-            type: type,
-            onChange: this._changeHandle.bind(this, label),
-            onBlur: this._changeHandle.bind(this, label)
-          }),
-          !this.state.validate && _react2.default.createElement(
-            'label',
-            null,
-            this.state.message
-          )
+          this.state.message
         )
       );
     }
@@ -18672,6 +18676,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
+
+__webpack_require__(32);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18716,11 +18722,12 @@ var Select = function (_Component) {
 
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'Select' },
         _react2.default.createElement(
           'label',
           null,
-          label
+          label,
+          ' :'
         ),
         _react2.default.createElement(
           'select',
@@ -18750,6 +18757,12 @@ exports.default = Select;
 
 /***/ }),
 /* 32 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18764,6 +18777,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
+
+__webpack_require__(34);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18810,45 +18825,43 @@ var Choice = function (_Component) {
 
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'Choice' },
         _react2.default.createElement(
           'label',
           null,
           ' ',
           label,
-          ' '
+          ' :'
         ),
         _react2.default.createElement(
           'div',
           null,
-          _react2.default.createElement(
-            'div',
-            null,
-            optionList.map(function (element, index) {
-              return _react2.default.createElement(
-                'div',
-                { key: index },
-                _react2.default.createElement('input', {
-                  type: type,
-                  name: property,
-                  value: element.value,
-                  onClick: function onClick() {
-                    _this2._changeHandle(label, element.value);
-                  }
-                }),
-                _react2.default.createElement(
-                  'label',
-                  null,
-                  element.key
-                )
-              );
-            })
-          ),
-          _react2.default.createElement(
-            'label',
-            null,
-            !this.state.validate && "You need to choose one"
-          )
+          optionList.map(function (element, index) {
+            return _react2.default.createElement(
+              'div',
+              { key: index },
+              _react2.default.createElement('input', {
+                type: type,
+                name: property,
+                value: element.value,
+                id: element.value,
+                onClick: function onClick() {
+                  _this2._changeHandle(label, element.value);
+                }
+              }),
+              _react2.default.createElement(
+                'label',
+                { htmlFor: element.value },
+                element.key
+              )
+            );
+          })
+        ),
+        _react2.default.createElement('div', null),
+        _react2.default.createElement(
+          'label',
+          null,
+          !this.state.validate && "You need to choose one"
         )
       );
     }
@@ -18860,7 +18873,13 @@ var Choice = function (_Component) {
 exports.default = Choice;
 
 /***/ }),
-/* 33 */
+/* 34 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18952,7 +18971,13 @@ var UploadImage = function (_Component) {
 exports.default = UploadImage;
 
 /***/ }),
-/* 34 */
+/* 36 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19062,6 +19087,12 @@ var Table = function (_Component) {
 }(_react.Component);
 
 exports.default = Table;
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

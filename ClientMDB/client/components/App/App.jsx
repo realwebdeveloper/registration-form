@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Form from '../Form/Form.jsx';
 import Table from '../Table/Table.jsx';
+import './App.scss'
 
 export default class App extends Component {
   constructor(props) {
@@ -11,12 +12,12 @@ export default class App extends Component {
   }
   render() {
     return (
-      <div>
+      <div className='page'>
         <Form addUserInfo={this._addUserInfo}/>
         <Table 
           listUserInfo = {this.state.listUserInfo}
         />
-        <button onClick={this.getServerData}>GET</button>
+         <button onClick={this.getServerData}>GET</button>
       </div>
     );
   }

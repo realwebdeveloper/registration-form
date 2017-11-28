@@ -1,11 +1,97 @@
-div label {
+.Input label:first-of-type {
   display: inline-block;
-  width: 40%; }
+  width: 30%;
+  height: 15px;
+  text-align: right;
+  font-weight: bold; }
 
-div div {
+.Input input {
   display: inline-block;
-  width: 60%; }
-  div div input {
-    display: block; }
-  div div label {
-    display: block; }
+  position: relative;
+  left: 5px;
+  width: 65%; }
+
+.Input div {
+  display: inline-block;
+  width: 30%;
+  height: 15px;
+  text-align: right;
+  font-weight: bold;
+  line-height: initial; }
+
+.Input label:nth-of-type(2) {
+  display: inline-block;
+  position: relative;
+  left: 5px;
+  color: red;
+  font-size: 10px;
+  width: 65%; }
+.Select label {
+  display: inline-block;
+  width: 30%;
+  height: 15px;
+  text-align: right;
+  font-weight: bold;
+  line-height: initial; }
+
+.Select select {
+  display: inline-block;
+  position: relative;
+  left: 5px;
+  width: 65%; }
+.Choice > label:first-of-type {
+  display: inline-block;
+  width: 30%;
+  height: 15px;
+  text-align: right;
+  font-weight: bold; }
+
+.Choice > label:nth-of-type(2) {
+  display: inline-block;
+  position: relative;
+  left: 5px;
+  color: red;
+  font-size: 10px;
+  width: 65%; }
+
+.Choice > div:first-of-type {
+  display: inline-block;
+  position: relative;
+  left: 5px;
+  width: 65%; }
+  .Choice > div:first-of-type div {
+    display: inline-block;
+    width: 100px; }
+
+.Choice > div:last-of-type {
+  display: inline-block;
+  width: 30%;
+  height: 15px;
+  text-align: right;
+  font-weight: bold;
+  line-height: initial; }
+.wrapper {
+  margin: 20px 100px 40px 100px;
+  font-size: 20px;
+  line-height: 30px;
+  border: 10px solid gray;
+  padding: 60px 50px 60px 50px;
+  background-color: #FFFFFF;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+  .wrapper > div:second-child {
+    display: flex;
+    justify-content: space-around; }
+    .wrapper > div:second-child > div:first-child {
+      display: flex;
+      flex-grow: 1;
+      flex-direction: column;
+      padding: 0px 50px 0px; }
+    .wrapper > div:second-child > div:second-child {
+      flex-grow: 3; }
+.page {
+  width: 100%;
+  display: block; }
+  .page:first-child > div {
+    width: 100%; }
+  .page:second-child > div {
+    width: 100%; }
