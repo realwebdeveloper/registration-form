@@ -11,10 +11,10 @@ export default class UploadImage extends Component {
     const {src, label} = this.props;
     return (
       <div>
-        <img src={this.state.src} alt={label}/>
+        <img src={this.state.src} alt={label} id = {this.props.id}/>
         <label>
           <input type='file' accept='image/*'
-            onClick = {this._changeHandle.bind(this)}
+            onChange = {this._changeHandle.bind(this)}
           />
           {label}
         </label>
@@ -22,7 +22,8 @@ export default class UploadImage extends Component {
     );
   }
   _changeHandle = (e) => {
-    img = window.URL.createObjectURL(e.target.files[0]);
+    debugger
+    let img = window.URL.createObjectURL(e.target.files[0]);
     this.setState({
       src: img,
       validate: true
@@ -30,8 +31,8 @@ export default class UploadImage extends Component {
       this.props.changeHandle(this.props.property, this.state.src, this.state.validate);
     })
   }
-  getBase64Image() {
-    var img = document.getElementById("user-picture");
+  getBase64Image = () => {
+    var img = document.getElementById(this.props.id);
     var canvas = document.createElement("canvas");
     canvas.width = img.width;
     canvas.height = img.height;

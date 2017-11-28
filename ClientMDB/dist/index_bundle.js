@@ -18276,7 +18276,7 @@ var _Form = __webpack_require__(28);
 
 var _Form2 = _interopRequireDefault(_Form);
 
-var _Table = __webpack_require__(33);
+var _Table = __webpack_require__(34);
 
 var _Table2 = _interopRequireDefault(_Table);
 
@@ -18401,15 +18401,15 @@ var _Input = __webpack_require__(29);
 
 var _Input2 = _interopRequireDefault(_Input);
 
-var _Select = __webpack_require__(30);
+var _Select = __webpack_require__(31);
 
 var _Select2 = _interopRequireDefault(_Select);
 
-var _Choice = __webpack_require__(31);
+var _Choice = __webpack_require__(32);
 
 var _Choice2 = _interopRequireDefault(_Choice);
 
-var _UploadImage = __webpack_require__(32);
+var _UploadImage = __webpack_require__(33);
 
 var _UploadImage2 = _interopRequireDefault(_UploadImage);
 
@@ -18430,13 +18430,7 @@ var Form = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, props));
 
     _this._changHandle = function (property, value, validate) {
-      // let newInfo = Object.keys(this.state.info).map(key => {
-      //   return this.state.info[key]
-      // });
       var newInfo = JSON.parse(JSON.stringify(_this.state.info));
-      // let newValidate = Object.keys(this.state.validate).map(key => {
-      //   return this.state.validate[key]
-      // });
       var newValidate = JSON.parse(JSON.stringify(_this.state.validate));
       newInfo[property] = value;
       newValidate[property] = validate;
@@ -18475,48 +18469,58 @@ var Form = function (_Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_UploadImage2.default, {
-          src: '',
-          label: 'Upload Picture'
-        }),
-        _react2.default.createElement(_Input2.default, {
-          type: 'text',
-          label: 'Name',
-          property: 'name',
-          validateAndMessage: [{ regExp: '(^| )[a-z]', message: 'Your name need capitalized', valid: false }, { regExp: '^.{0,7}$', message: 'Your name is at least 8 character', valid: false }],
-          changeHandle: this._changHandle,
-          validate: this.state.validate.name
-        }),
-        _react2.default.createElement(_Input2.default, {
-          type: 'text',
-          label: 'Email',
-          property: 'email',
-          validateAndMessage: [{ regExp: '^[a-z0-9\\.]*[a-z0-9]@[a-z]+\\.([a-z]+\\.)*[a-z0-9]+$', message: '', valid: true }, { regExp: '\w*', message: 'Your email is not valid', valid: false }],
-          changeHandle: this._changHandle,
-          validate: this.state.validate.email
-        }),
-        _react2.default.createElement(_Input2.default, {
-          type: 'date',
-          label: 'DOB',
-          property: 'DOB',
-          validateAndMessage: [{ regExp: '^.{0,0}$', message: 'Not valid date', valid: false }],
-          changeHandle: this._changHandle,
-          validate: this.state.validate.DOB
-        }),
-        _react2.default.createElement(_Select2.default, {
-          label: 'City',
-          property: 'city',
-          optionList: [{ key: 'Ho Chi Minh', value: 'Ho Chi Minh' }, { key: 'Da Nang', value: 'Da Nang' }, { key: 'Ha Noi', value: 'Ha Noi' }],
-          changeHandle: this._changHandle
-        }),
-        _react2.default.createElement(_Choice2.default, {
-          label: 'Gender',
-          property: 'gender',
-          type: 'radio',
-          optionList: [{ key: 'Male', value: 'male' }, { key: 'Female', value: 'female' }],
-          changeHandle: this._changHandle,
-          validate: this.state.validate.gender
-        }),
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(_UploadImage2.default, {
+            src: '',
+            label: 'Upload Picture',
+            id: 'user-picture',
+            changeHandle: this._changHandle
+          })
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(_Input2.default, {
+            type: 'text',
+            label: 'Name',
+            property: 'name',
+            validateAndMessage: [{ regExp: '(^| )[a-z]', message: 'Your name need capitalized', valid: false }, { regExp: '^.{0,7}$', message: 'Your name is at least 8 character', valid: false }],
+            changeHandle: this._changHandle,
+            validate: this.state.validate.name
+          }),
+          _react2.default.createElement(_Input2.default, {
+            type: 'text',
+            label: 'Email',
+            property: 'email',
+            validateAndMessage: [{ regExp: '^[a-z0-9\\.]*[a-z0-9]@[a-z]+\\.([a-z]+\\.)*[a-z0-9]+$', message: '', valid: true }, { regExp: '\w*', message: 'Your email is not valid', valid: false }],
+            changeHandle: this._changHandle,
+            validate: this.state.validate.email
+          }),
+          _react2.default.createElement(_Input2.default, {
+            type: 'date',
+            label: 'DOB',
+            property: 'DOB',
+            validateAndMessage: [{ regExp: '^.{0,0}$', message: 'Not valid date', valid: false }],
+            changeHandle: this._changHandle,
+            validate: this.state.validate.DOB
+          }),
+          _react2.default.createElement(_Select2.default, {
+            label: 'City',
+            property: 'city',
+            optionList: [{ key: 'Ho Chi Minh', value: 'Ho Chi Minh' }, { key: 'Da Nang', value: 'Da Nang' }, { key: 'Ha Noi', value: 'Ha Noi' }],
+            changeHandle: this._changHandle
+          }),
+          _react2.default.createElement(_Choice2.default, {
+            label: 'Gender',
+            property: 'gender',
+            type: 'radio',
+            optionList: [{ key: 'Male', value: 'male' }, { key: 'Female', value: 'female' }],
+            changeHandle: this._changHandle,
+            validate: this.state.validate.gender
+          })
+        ),
         _react2.default.createElement(
           'button',
           { onClick: this._addUserInfo },
@@ -18547,6 +18551,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
+
+__webpack_require__(30);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18599,7 +18605,7 @@ var Input = function (_Component) {
   }
 
   _createClass(Input, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       var _props = this.props,
           label = _props.label,
@@ -18610,23 +18616,27 @@ var Input = function (_Component) {
           validate = _props.validate;
 
       return _react2.default.createElement(
-        "div",
+        'div',
         null,
         _react2.default.createElement(
-          "label",
+          'label',
           null,
           label
         ),
-        _react2.default.createElement("input", {
-          value: this.state.value,
-          type: type,
-          onChange: this._changeHandle.bind(this, label),
-          onBlur: this._changeHandle.bind(this, label)
-        }),
-        !this.state.validate && _react2.default.createElement(
-          "label",
+        _react2.default.createElement(
+          'div',
           null,
-          this.state.message
+          _react2.default.createElement('input', {
+            value: this.state.value,
+            type: type,
+            onChange: this._changeHandle.bind(this, label),
+            onBlur: this._changeHandle.bind(this, label)
+          }),
+          !this.state.validate && _react2.default.createElement(
+            'label',
+            null,
+            this.state.message
+          )
         )
       );
     }
@@ -18639,6 +18649,12 @@ exports.default = Input;
 
 /***/ }),
 /* 30 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18730,7 +18746,7 @@ var Select = function (_Component) {
 exports.default = Select;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18799,29 +18815,37 @@ var Choice = function (_Component) {
           label,
           ' '
         ),
-        optionList.map(function (element, index) {
-          return _react2.default.createElement(
-            'div',
-            { key: index },
-            _react2.default.createElement('input', {
-              type: type,
-              name: property,
-              value: element.value,
-              onClick: function onClick() {
-                _this2._changeHandle(label, element.value);
-              }
-            }),
-            _react2.default.createElement(
-              'label',
-              null,
-              element.key
-            )
-          );
-        }),
         _react2.default.createElement(
-          'label',
+          'div',
           null,
-          !this.state.validate && "You need to choose one"
+          _react2.default.createElement(
+            'div',
+            null,
+            optionList.map(function (element, index) {
+              return _react2.default.createElement(
+                'div',
+                { key: index },
+                _react2.default.createElement('input', {
+                  type: type,
+                  name: property,
+                  value: element.value,
+                  onClick: function onClick() {
+                    _this2._changeHandle(label, element.value);
+                  }
+                }),
+                _react2.default.createElement(
+                  'label',
+                  null,
+                  element.key
+                )
+              );
+            })
+          ),
+          _react2.default.createElement(
+            'label',
+            null,
+            !this.state.validate && "You need to choose one"
+          )
         )
       );
     }
@@ -18833,7 +18857,7 @@ var Choice = function (_Component) {
 exports.default = Choice;
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18865,17 +18889,40 @@ var UploadImage = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (UploadImage.__proto__ || Object.getPrototypeOf(UploadImage)).call(this, props));
 
-    _this._changeHandle = function (e) {};
+    _this._changeHandle = function (e) {
+      debugger;
+      var img = window.URL.createObjectURL(e.target.files[0]);
+      _this.setState({
+        src: img,
+        validate: true
+      }, function () {
+        _this.props.changeHandle(_this.props.property, _this.state.src, _this.state.validate);
+      });
+    };
 
-    _this.state = {};
+    _this.getBase64Image = function () {
+      var img = document.getElementById(_this.props.id);
+      var canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      var ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+
+      var dataURL = canvas.toDataURL("image/png");
+
+      return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+    };
+
+    _this.state = {
+      src: _this.props.src
+    };
     return _this;
   }
 
   _createClass(UploadImage, [{
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
       var _props = this.props,
           src = _props.src,
           label = _props.label;
@@ -18883,14 +18930,12 @@ var UploadImage = function (_Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement('img', { src: src, alt: label }),
+        _react2.default.createElement('img', { src: this.state.src, alt: label, id: this.props.id }),
         _react2.default.createElement(
           'label',
           null,
           _react2.default.createElement('input', { type: 'file', accept: 'image/*',
-            onClick: function onClick() {
-              _this2._changeHandle(e);
-            }
+            onChange: this._changeHandle.bind(this)
           }),
           label
         )
@@ -18904,7 +18949,7 @@ var UploadImage = function (_Component) {
 exports.default = UploadImage;
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
