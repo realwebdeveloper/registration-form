@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Form from './Form.jsx';
-import Table from './Table.jsx';
+import Form from '../Form/Form.jsx';
+import Table from '../Table/Table.jsx';
 
 export default class App extends Component {
   constructor(props) {
