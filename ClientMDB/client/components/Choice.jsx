@@ -13,22 +13,26 @@ export default class Choice extends Component {
     return (
       <div>
         <label> {label} </label>
-        {
-          optionList.map((element, index) => {
-            return (
-              <div key={index}>
-                <input 
-                  type = {type}
-                  name = {property}
-                  value = {element.value}
-                  onClick = {() => {this._changeHandle(label, element.value)}}
-                />
-                <label>{element.key}</label>
-              </div>
-            )
-          })
-        }
-        <label>{!this.state.validate && "You need to choose one"}</label>
+        <div>
+          <div>
+          {
+            optionList.map((element, index) => {
+              return (
+                <div key={index}>
+                  <input 
+                    type = {type}
+                    name = {property}
+                    value = {element.value}
+                    onClick = {() => {this._changeHandle(label, element.value)}}
+                  />
+                  <label>{element.key}</label>
+                </div>
+              )
+            })
+          }
+          </div>
+          <label>{!this.state.validate && "You need to choose one"}</label>
+        </div>
       </div>
     );
   }

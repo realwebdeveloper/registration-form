@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../css/Input.scss'
 
 export default class Input extends Component {
   constructor(props) {
@@ -14,13 +15,15 @@ export default class Input extends Component {
     return (
       <div>
         <label>{label}</label>
-        <input
-          value = {this.state.value}
-          type  = {type}
-          onChange = {this._changeHandle.bind(this, label)}
-          onBlur = {this._changeHandle.bind(this, label)}
-        />
-        {!this.state.validate && <label>{this.state.message}</label>}
+        <div>
+            <input
+              value = {this.state.value}
+              type  = {type}
+              onChange = {this._changeHandle.bind(this, label)}
+              onBlur = {this._changeHandle.bind(this, label)}
+            />
+            {!this.state.validate && <label>{this.state.message}</label>}
+        </div>
       </div>
     );
   }

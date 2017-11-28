@@ -14,7 +14,7 @@ export default class UploadImage extends Component {
         <img src={this.state.src} alt={label} id = {this.props.id}/>
         <label>
           <input type='file' accept='image/*'
-            onClick = {this._changeHandle.bind(this)}
+            onChange = {this._changeHandle.bind(this)}
           />
           {label}
         </label>
@@ -22,7 +22,8 @@ export default class UploadImage extends Component {
     );
   }
   _changeHandle = (e) => {
-    img = window.URL.createObjectURL(e.target.files[0]);
+    debugger
+    let img = window.URL.createObjectURL(e.target.files[0]);
     this.setState({
       src: img,
       validate: true
