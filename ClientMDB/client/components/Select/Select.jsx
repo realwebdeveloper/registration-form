@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import './Select.scss';
+
 
 export default class Select extends Component {
   constructor(props) {
@@ -11,8 +13,8 @@ export default class Select extends Component {
   render() {
     const {label, optionList} = this.props;
     return (
-      <div>
-        <label>{label}</label>
+      <div className = 'Select'>
+        <label>{label} :</label>
         <select>
           {
             optionList.map((element, index) => {

@@ -1,0 +1,39 @@
+.Choice {
+    >label {
+        &:first-of-type {
+            display: inline-block;
+            width: 30%;
+            height: 15px;
+            text-align: right;
+            font-weight: bold;
+        }
+        &:nth-of-type(2) {
+            display: inline-block;
+            position: relative;
+            left: 5px;
+            color: red;
+            font-size: 10px;
+            width: 65%;
+        }
+    }
+    >div {
+        &:first-of-type {
+            display: inline-block;
+            position: relative;
+            left: 5px;
+            width: 65%;
+            div {
+                display: inline-block;
+                width: 100px;
+            }
+        }
+        &:last-of-type {
+            display: inline-block;
+            width: 30%;
+            height: 15px;
+            text-align: right;
+            font-weight: bold;
+            line-height: initial;
+        }
+    }
+}

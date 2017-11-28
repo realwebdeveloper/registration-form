@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import InputStyle from './Input.scss'
+import './Input.scss'
+
 
 export default class Input extends Component {
   constructor(props) {
@@ -13,17 +14,16 @@ export default class Input extends Component {
   render() {
     const {label, property, validateAndMessage, type, changeHandle, validate} = this.props;
     return (
-      <div className={InputStyle.div}>
-        <label>{label}</label>
-        <div>
-            <input
-              value = {this.state.value}
-              type  = {type}
-              onChange = {this._changeHandle.bind(this, label)}
-              onBlur = {this._changeHandle.bind(this, label)}
-            />
-            {!this.state.validate && <label>{this.state.message}</label>}
-        </div>
+      <div className = 'Input'>
+        <label>{label} :</label>
+        <input
+          value = {this.state.value}
+          type  = {type}
+          onChange = {this._changeHandle.bind(this, label)}
+          onBlur = {this._changeHandle.bind(this, label)}
+        />
+        <div></div>
+        {!this.state.validate && <label>{this.state.message}</label>}
       </div>
     );
   }

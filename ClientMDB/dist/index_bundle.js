@@ -18617,9 +18617,10 @@ var Input = function (_Component) {
           changeHandle = _props.changeHandle,
           validate = _props.validate;
 
+      console.log(_Input2.default.div);
       return _react2.default.createElement(
         'div',
-        { className: _Input2.default.div },
+        { style: _Input2.default.div },
         _react2.default.createElement(
           'label',
           null,
