@@ -1,0 +1,11 @@
+.page {
+  display: block;
+  > div {
+    &:first-child {
+    }
+  }
+  > div {
+    &:second-child{
+    }
+  }
+}
