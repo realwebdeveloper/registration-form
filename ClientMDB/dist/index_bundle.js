@@ -18319,6 +18319,7 @@ var App = function (_Component) {
       xhr.addEventListener("readystatechange", function () {
         console.log(this.readyState);
         if (this.readyState === 1) {
+          location.reload();
           getServerData();
         }
       });
@@ -18356,6 +18357,7 @@ var App = function (_Component) {
     _this.state = {
       listUserInfo: []
     };
+    _this.getServerData();
     return _this;
   }
 
@@ -18480,7 +18482,7 @@ var Form = function (_Component) {
           'div',
           null,
           _react2.default.createElement(_UploadImage2.default, {
-            src: '',
+            src: './Pictures/empty-picture.png',
             label: 'Upload Picture',
             id: 'user-picture',
             property: 'picture',
@@ -18606,7 +18608,7 @@ var Input = function (_Component) {
 
     _this.state = {
       value: "",
-      message: "",
+      message: "This field can't be empty",
       validate: false
     };
     return _this;
@@ -18744,7 +18746,8 @@ var Select = function (_Component) {
               element.key
             );
           })
-        )
+        ),
+        _react2.default.createElement('div', null)
       );
     }
   }]);
@@ -18919,7 +18922,8 @@ var UploadImage = function (_Component) {
         src: img,
         validate: true
       }, function () {
-        _this.props.changeHandle(_this.props.property, _this.state.src, _this.state.validate);
+        // let src = this.getBase64Image();
+        _this.props.changeHandle(_this.props.property, img, _this.state.validate);
       });
     };
 
@@ -18934,11 +18938,14 @@ var UploadImage = function (_Component) {
 
       var dataURL = canvas.toDataURL("image/png");
 
+      return dataURL;
       return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
     };
 
     _this.state = {
-      src: _this.props.src
+      src: _this.props.src,
+      message: "",
+      validate: false
     };
     return _this;
   }
@@ -18954,6 +18961,11 @@ var UploadImage = function (_Component) {
         'div',
         { className: 'image' },
         _react2.default.createElement('img', { src: this.state.src, alt: label, id: this.props.id }),
+        !this.state.validate && _react2.default.createElement(
+          'p',
+          null,
+          'Please upload an image.'
+        ),
         _react2.default.createElement(
           'label',
           null,

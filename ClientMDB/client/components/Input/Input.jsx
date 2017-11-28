@@ -7,7 +7,7 @@ export default class Input extends Component {
     super(props);
     this.state ={
       value:"",
-      message:"",
+      message:"This field can't be empty",
       validate: false
     }
   }
