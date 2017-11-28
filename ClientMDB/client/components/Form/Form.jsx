@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Input from './Input.jsx';
-import Select from './Select.jsx';
-import Choice from './Choice.jsx';
-import UploadImage from './UploadImage.jsx'
+import Input from '../Input/Input.jsx';
+import Select from '../Select/Select.jsx';
+import Choice from '../Choice/Choice.jsx';
+import UploadImage from '../UploadImage/UploadImage.jsx'
 
 export default class Form extends Component {
   constructor(props) {

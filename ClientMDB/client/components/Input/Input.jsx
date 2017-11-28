@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../css/Input.scss'
+import InputStyle from './Input.scss'
 
 export default class Input extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ export default class Input extends Component {
   render() {
     const {label, property, validateAndMessage, type, changeHandle, validate} = this.props;
     return (
-      <div>
+      <div className={InputStyle.div}>
         <label>{label}</label>
         <div>
             <input
