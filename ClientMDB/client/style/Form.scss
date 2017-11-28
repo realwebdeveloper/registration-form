@@ -1,0 +1,16 @@
+.wrapper {
+  margin:20px 100px 40px;
+  font-size: 20px;
+  line-height: 30px;
+  border: 10px double gray;
+  padding: 60px 50px 60px;
+  background-color: #FFFFFF;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  &:second-child{
+      > div {
+        display: flex;
+        justify-content: space-around
+      }
+    }
+  }
+}
