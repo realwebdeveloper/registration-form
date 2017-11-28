@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Table.scss';
 
 export default class Table extends Component {
   constructor(props) {
@@ -8,7 +9,7 @@ export default class Table extends Component {
   render() {
     const {listUserInfo} = this.props;
     return (
-      <div>
+      <div className = 'Table'>
         <table>
           <thead>
             <tr>

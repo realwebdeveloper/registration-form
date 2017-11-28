@@ -18276,11 +18276,11 @@ var _Form = __webpack_require__(28);
 
 var _Form2 = _interopRequireDefault(_Form);
 
-var _Table = __webpack_require__(37);
+var _Table = __webpack_require__(38);
 
 var _Table2 = _interopRequireDefault(_Table);
 
-__webpack_require__(38);
+__webpack_require__(40);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18415,7 +18415,7 @@ var _UploadImage = __webpack_require__(35);
 
 var _UploadImage2 = _interopRequireDefault(_UploadImage);
 
-__webpack_require__(36);
+__webpack_require__(37);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18895,6 +18895,8 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+__webpack_require__(36);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -18951,7 +18953,7 @@ var UploadImage = function (_Component) {
 
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'image' },
         _react2.default.createElement('img', { src: this.state.src, alt: label, id: this.props.id }),
         _react2.default.createElement(
           'label',
@@ -18978,6 +18980,12 @@ exports.default = UploadImage;
 
 /***/ }),
 /* 37 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18992,6 +19000,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
+
+__webpack_require__(39);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19020,7 +19030,7 @@ var Table = function (_Component) {
 
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'Table' },
         _react2.default.createElement(
           'table',
           null,
@@ -19089,7 +19099,13 @@ var Table = function (_Component) {
 exports.default = Table;
 
 /***/ }),
-/* 38 */
+/* 39 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 40 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

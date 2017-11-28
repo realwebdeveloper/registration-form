@@ -76,14 +76,15 @@ exports.handleRequest = function (request, response) {
                     var resolvedBase = path.resolve(staticBasePath);
                     var safeSuffix = path.normalize(url).replace(/^(\.\.[\/\\])+/, '');
                     var fileLoc = path.join(resolvedBase, safeSuffix);
-
+                    console.log(fileLoc);
                     fs.readFile(fileLoc, function (error, pageRes) {
                         if (error) {
                             response.writeHead(404);
                             response.write('Contents you are looking are Not Found');
                         }
                         else {
-                            response.writeHead(200, { 'Content-Type': 'text/javascript' });
+                            // response.writeHead(200, { 'Content-Type': 'text/javascript' });
+                            response.writeHead(200);
                             response.write(pageRes);
                         }
                         response.end();
