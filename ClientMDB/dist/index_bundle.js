@@ -18450,6 +18450,7 @@ var Form = function (_Component) {
 
     _this.state = {
       info: {
+        picture: '',
         name: '',
         email: '',
         DOB: '',
@@ -18457,6 +18458,7 @@ var Form = function (_Component) {
         city: 'Ho Chi Minh'
       },
       validate: {
+        picture: false,
         name: false,
         email: false,
         DOB: false,
@@ -18485,6 +18487,7 @@ var Form = function (_Component) {
             src: '',
             label: 'Upload Picture',
             id: 'user-picture',
+            property: 'picture',
             changeHandle: this._changHandle
           }),
           _react2.default.createElement(
@@ -19043,6 +19046,11 @@ var Table = function (_Component) {
               _react2.default.createElement(
                 'th',
                 null,
+                ' Profile Picture'
+              ),
+              _react2.default.createElement(
+                'th',
+                null,
                 ' Name '
               ),
               _react2.default.createElement(
@@ -19075,14 +19083,22 @@ var Table = function (_Component) {
                 'tr',
                 { key: index },
                 Object.keys(element).map(function (key) {
-                  if (key != '_id') {
+                  if (key != '_id' && key != 'picture') {
                     return _react2.default.createElement(
                       'td',
                       { key: element[key] },
                       element[key]
                     );
                   } else {
-                    return null;
+                    if (key === '_id') {
+                      return null;
+                    } else {
+                      return _react2.default.createElement(
+                        'td',
+                        null,
+                        _react2.default.createElement('img', { src: element[key] })
+                      );
+                    }
                   }
                 })
               );

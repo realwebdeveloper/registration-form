@@ -95,7 +95,10 @@
     color: white;
     text-align: center;
     font-size: 15px;
-    font-family: "Segoe UI",Frutiger,"Frutiger Linotype","Dejavu Sans","Helvetica Neue",Arial,sans-serif; }
+    font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    cursor: pointer; }
+    .image label:active {
+      background-color: #005cac; }
     .image label input {
       display: none; }
 .wrapper {
@@ -127,7 +130,10 @@
     color: white;
     text-align: center;
     font-size: 15px;
-    font-family: "Segoe UI",Frutiger,"Frutiger Linotype","Dejavu Sans","Helvetica Neue",Arial,sans-serif; }
+    font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    cursor: pointer; }
+    .wrapper button:active {
+      background-color: #005cac; }
 .Table table {
   width: 100%;
   border-collapse: collapse; }
@@ -135,5 +141,8 @@
     border: 1px solid black; }
   .Table table th {
     background-color: gray; }
+  .Table table td img {
+    height: 50px;
+    width: 50px; }
 .page {
   display: block; }

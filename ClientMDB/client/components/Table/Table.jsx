@@ -13,6 +13,7 @@ export default class Table extends Component {
         <table>
           <thead>
             <tr>
+              <th> Profile Picture</th>
               <th> Name </th>
               <th> Email </th>
               <th> DOB </th>
@@ -27,13 +28,22 @@ export default class Table extends Component {
                   <tr key={index}>
                     {
                       Object.keys(element).map(key => {
-                        if (key != '_id'){
+                        if (key != '_id' && key != 'picture'){
                           return (
                             <td key={element[key]}>{element[key]}</td>
                           ); 
                         }
                         else {
-                          return (null);
+                          if (key === '_id'){
+                            return (null);
+                          }
+                          else {
+                            return (
+                              <td>
+                                <img src={element[key]}/>
+                              </td>
+                            )
+                          }
                         }
                       })
                     }

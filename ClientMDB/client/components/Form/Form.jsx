@@ -10,6 +10,7 @@ export default class Form extends Component {
     super(props);
     this.state = {
       info: {
+        picture: '',
         name: '',
         email: '',
         DOB: '',
@@ -17,6 +18,7 @@ export default class Form extends Component {
         city: 'Ho Chi Minh'
       },
       validate: {
+        picture: false,
         name: false,
         email: false,
         DOB: false,
@@ -34,6 +36,7 @@ export default class Form extends Component {
             src = ''
             label = 'Upload Picture'
             id= 'user-picture'
+            property = 'picture'
             changeHandle = {this._changHandle}
           />
           <div>
