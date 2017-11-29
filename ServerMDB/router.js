@@ -2,6 +2,7 @@ var exports = module.exports = {};
 const fs = require('fs');
 const path = require('path');
 const database = require('./database');
+const jwt = require('jwt-simple');
 
 const staticBasePath = '../ClientMDB/dist';
 const secret = 'a;lskdjflsajdi387823940184lksajdf;lkjsd'
@@ -12,10 +13,32 @@ exports.handleRequest = function (request, response) {
     let userInfo = headers.authKey;
     let checkAuth = false;
     userInfo = jwt.decode(userInfo, secret);
-    if (database.find(userInfo)) {
+    if (database.findOne(userInfo)) {
       checkAuth = true;
     }
     console.log('Request at: ', url);
+    if (url ==='/redirect'){
+        let reqUrl = headers.referer;
+        if (checkAuth){
+            if (reqUrl != '/registration'){
+                response.writeHead(301, {Location: '/registration'});
+                response.end();
+            }
+            else {
+                response.end();
+            }
+        }
+        else {
+            if (reqUrl === '/registration'){
+                response.writeHead(301, { Location: '/login' });
+                response.end();
+            }
+            else {
+                response.end();
+            }
+        }
+    }
+    else {
         if (url.substr(0, 4) === "/api") {
             var api_url = url.slice(5);
             switch (method) {
@@ -66,33 +89,35 @@ exports.handleRequest = function (request, response) {
           if (method === 'GET') {
             switch (url) {
               case "/":
-                if (checkAuth) {
-                  response.writeHead(301, {Location: '/registration'});
-                  response.end();
-                }
-                else {
-                  response.writeHead(301, {Location: '/login'});
-                  response.end();
-                }
+                // if (checkAuth) {
+                //   response.writeHead(301, {Location: '/registration'});
+                //   response.end();
+                // }
+                // else {
+                //   response.writeHead(301, {Location: '/login'});
+                //   response.end();
+                // }
+                response.writeHead(301, { Location: '/login' });
+                response.end();
                 break;
               default:
                 if (url.indexOf('.') === -1) url += '.html';
                 var resolvedBase = path.resolve(staticBasePath);
                 var safeSuffix = path.normalize(url).replace(/^(\.\.[\/\\])+/, '');
                 var fileLoc = path.join(resolvedBase, safeSuffix);
-                if (checkAuth) {
-                  if (url == '/login.html' || url == '/signup.html') {
-                    response.writeHead(301, {Location: '/registration'});
-                    response.end();
-                    break;
-                  }
-                } else {
-                  if (url == '/registration.html'){
-                    response.writeHead(301, {Location: '/login'});
-                    response.end();
-                    break;
-                  }
-                }
+                // if (checkAuth) {
+                //   if (url == '/login.html' || url == '/signup.html') {
+                //     response.writeHead(301, {Location: '/registration'});
+                //     response.end();
+                //     break;
+                //   }
+                // } else {
+                //   if (url == '/registration.html'){
+                //     response.writeHead(301, {Location: '/login'});
+                //     response.end();
+                //     break;
+                //   }
+                // }
                 fs.readFile(fileLoc, function (error, pageRes) {
                   if (error) {
                       response.writeHead(404);
@@ -114,6 +139,7 @@ exports.handleRequest = function (request, response) {
               response.end();
           }
         }
+    }
 }
 
 return module.exports;

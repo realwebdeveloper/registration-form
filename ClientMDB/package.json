@@ -13,6 +13,7 @@
     "es2015": "0.0.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "html-webpack-plugin": "^2.30.1",
+    "jwt-simple": "^0.5.1",
     "mongodb": "^2.2.33",
     "node-fetch": "^1.7.3",
     "node-sass": "^4.7.2",
