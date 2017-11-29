@@ -4,33 +4,18 @@ const path = require('path');
 const database = require('./database');
 
 const staticBasePath = '../ClientMDB/dist';
+const secret = 'a;lskdjflsajdi387823940184lksajdf;lkjsd'
 
 
 exports.handleRequest = function (request, response) {
     const { headers, method, url } = request;
-
-    console.log('Request at: ', url);
-    if (url.substr(0,9) === '/redirect'){
-        if (method === 'GET'){
-            database.findOne(headers.encodedKey, (user) => {
-                if (user === 'undefined'){
-                    response.writeHead(301,
-                        { Location: '/login'}
-                    );
-                    response.end();
-                }
-                else {
-                    
-                }
-            })
-        }
-        else {
-            response.writeHead(404);
-            response.write('Contents you are looking are Not Found');
-            response.end();
-        }
+    let userInfo = headers.authKey;
+    let checkAuth = false;
+    userInfo = jwt.decode(userInfo, secret);
+    if (database.find(userInfo)) {
+      checkAuth = true;
     }
-    else {
+    console.log('Request at: ', url);
         if (url.substr(0, 4) === "/api") {
             var api_url = url.slice(5);
             switch (method) {
@@ -78,48 +63,57 @@ exports.handleRequest = function (request, response) {
             }
         }
         else {
-            if (method === 'GET'){
-                switch (url) {
-                    case "/":
-                        fs.readFile('../ClientMDB/dist/login.html', function (error, pageRes) {
-                            if (error) {
-                                response.writeHead(404);
-                                response.write('Contents you are looking are Not Found');
-                            }
-                            else {
-                                response.writeHead(200, { 'Content-Type': 'text/html' });
-                                response.write(pageRes);
-                            }
-                            response.end();
-                        });
-                        break;
-                    default:
-                        var resolvedBase = path.resolve(staticBasePath);
-                        var safeSuffix = path.normalize(url).replace(/^(\.\.[\/\\])+/, '');
-                        var fileLoc = path.join(resolvedBase, safeSuffix);
-                        if (fileLoc.indexOf('.') === -1) fileLoc += '.html';
-                        fs.readFile(fileLoc, function (error, pageRes) {
-                            if (error) {
-                                response.writeHead(404);
-                                response.write('Contents you are looking are Not Found');
-                            }
-                            else {
-                                // response.writeHead(200, { 'Content-Type': 'text/javascript' });
-                                response.writeHead(200);
-                                response.write(pageRes);
-                            }
-                            response.end();
-                        });
-                        break;
+          if (method === 'GET') {
+            switch (url) {
+              case "/":
+                if (checkAuth) {
+                  response.writeHead(301, {Location: '/registration'});
+                  response.end();
                 }
-            }
-            else {
-                response.writeHead(404);
-                response.write('Contents you are looking are Not Found');
-                response.end();
-            }
+                else {
+                  response.writeHead(301, {Location: '/login'});
+                  response.end();
+                }
+                break;
+              default:
+                if (url.indexOf('.') === -1) url += '.html';
+                var resolvedBase = path.resolve(staticBasePath);
+                var safeSuffix = path.normalize(url).replace(/^(\.\.[\/\\])+/, '');
+                var fileLoc = path.join(resolvedBase, safeSuffix);
+                if (checkAuth) {
+                  if (url == '/login.html' || url == '/signup.html') {
+                    response.writeHead(301, {Location: '/registration'});
+                    response.end();
+                    break;
+                  }
+                } else {
+                  if (url == '/registration.html'){
+                    response.writeHead(301, {Location: '/login'});
+                    response.end();
+                    break;
+                  }
+                }
+                fs.readFile(fileLoc, function (error, pageRes) {
+                  if (error) {
+                      response.writeHead(404);
+                      response.write('Contents you are looking are Not Found');
+                  }
+                  else {
+                      // response.writeHead(200, { 'Content-Type': 'text/javascript' });
+                      response.writeHead(200);
+                      response.write(pageRes);
+                  }
+                  response.end();
+                });
+                break;
+              }
+          }
+          else {
+              response.writeHead(404);
+              response.write('Contents you are looking are Not Found');
+              response.end();
+          }
         }
-    }
 }
 
 return module.exports;
