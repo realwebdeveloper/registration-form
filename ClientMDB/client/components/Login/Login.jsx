@@ -1,5 +1,6 @@
 import React from 'react';
 import Input from '../Input/Input.jsx';
+import './Login.scss'
 
 export default class Login extends React.Component {
     constructor(props){

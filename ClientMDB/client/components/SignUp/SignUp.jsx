@@ -1,5 +1,6 @@
 import React from 'react';
-import Input from '../Input/Input.jsx'
+import Input from '../Input/Input.jsx';
+import './SignUp.scss'
 
 export default class SignUp extends React.Component {
     constructor(props){
