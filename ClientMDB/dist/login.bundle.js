@@ -18451,6 +18451,11 @@ var Login = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 { className: 'Login' },
+                _react2.default.createElement(
+                    'h1',
+                    null,
+                    'Log In'
+                ),
                 _react2.default.createElement(_Input2.default, {
                     type: 'text',
                     label: 'Username',
