@@ -36,15 +36,16 @@ exports.queryAll = function(callback) {
 }
 
 exports.findOne = function (encodedKey, callback) {
+    console.log('findOne');
     var url = 'mongodb://localhost:27017/myproject';
 
     var MongoClient = require('mongodb').MongoClient;
 
     MongoClient.connect(url, function (err, db) {
-
         db.collection('accounts', function (err, collection) {
-
             collection.findOne({key: encodedKey},function (err, user) {
+                console.log(user);
+                console.log(callback);
                 if (err) throw err;
                 callback(user);
             });

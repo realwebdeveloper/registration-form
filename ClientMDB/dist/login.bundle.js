@@ -18425,7 +18425,7 @@ var Login = function (_React$Component) {
             var xhr = new XMLHttpRequest();
             xhr.withCredentials = true;
 
-            xhr.open("GET", "http://localhost:8080/redirect");
+            xhr.open("GET", "http://localhost:8080/nnmhuy");
             xhr.setRequestHeader("encodedKey", localStorage.encodedKey);
             xhr.send();
         };
@@ -18450,9 +18450,8 @@ var Login = function (_React$Component) {
                 username: false,
                 password: false
             }
-        };
-        _this.redirect();
-        return _this;
+            // this.redirect();
+        };return _this;
     }
 
     _createClass(Login, [{

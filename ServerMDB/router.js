@@ -9,18 +9,30 @@ const staticBasePath = '../ClientMDB/dist';
 exports.handleRequest = function (request, response) {
     const { headers, method, url } = request;
 
+    console.log('Request from: ',headers.referer);
     console.log('Request at: ', url);
-    if (url.substr(0,9) === '/redirect'){
+
+    if (url == '/authentication'){
         if (method === 'GET'){
             database.findOne(headers.encodedKey, (user) => {
-                if (user === 'undefined'){
-                    response.writeHead(301,
-                        { Location: '/login'}
-                    );
-                    response.end();
+                console.log(user);
+                if (user == 'undefined'){
+                    if (headers.referer == 'http://localhost:8080/registration'){
+                        response.writeHead(301,
+                            { Location: '/login'}
+                        );
+                        response.end();
+                    }
+                    else response.end();
                 }
                 else {
-                    
+                    if (headers.referer != 'http://localhost:8080/registration') {
+                        response.writeHead(301,
+                            { Location: '/registration' }
+                        );
+                        response.end();
+                    }
+                    else response.end();
                 }
             })
         }
@@ -81,17 +93,21 @@ exports.handleRequest = function (request, response) {
             if (method === 'GET'){
                 switch (url) {
                     case "/":
-                        fs.readFile('../ClientMDB/dist/login.html', function (error, pageRes) {
-                            if (error) {
-                                response.writeHead(404);
-                                response.write('Contents you are looking are Not Found');
-                            }
-                            else {
-                                response.writeHead(200, { 'Content-Type': 'text/html' });
-                                response.write(pageRes);
-                            }
-                            response.end();
-                        });
+                        // fs.readFile('../ClientMDB/dist/login.html', function (error, pageRes) {
+                        //     if (error) {
+                        //         response.writeHead(404);
+                        //         response.write('Contents you are looking are Not Found');
+                        //     }
+                        //     else {
+                        //         response.writeHead(200, { 'Content-Type': 'text/html' });
+                        //         response.write(pageRes);
+                        //     }
+                        //     response.end();
+                        // });
+                        response.writeHead(301,
+                            { Location: '/login' }
+                        );
+                        response.end();
                         break;
                     default:
                         var resolvedBase = path.resolve(staticBasePath);
