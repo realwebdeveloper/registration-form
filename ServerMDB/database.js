@@ -46,7 +46,8 @@ exports.findOne = function (encodedKey, callback) {
 
             collection.findOne({key: encodedKey},function (err, user) {
                 if (err) throw err;
-                callback(user);
+                if (user) callback(true); 
+                else callback(false);
             });
         });
 
