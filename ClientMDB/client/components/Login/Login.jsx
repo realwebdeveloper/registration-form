@@ -1,6 +1,5 @@
 import React from 'react';
-import Input from '../Input/Input.jsx'
-
+import Input from '../Input/Input.jsx';
 
 export default class Login extends React.Component {
     constructor(props){
@@ -15,6 +14,15 @@ export default class Login extends React.Component {
                 password: false
             }
         }
+        this.redirect();
+    }
+    redirect = () => {
+        let xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+
+        xhr.open("GET", "http://localhost:8080/redirect");
+        xhr.setRequestHeader("encodedKey", localStorage.encodedKey);
+        xhr.send();
     }
     render() {
         return (
