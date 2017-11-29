@@ -42,21 +42,18 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin ({
-      hash: true,
       title: 'Registration Form',
       template: './client/index.html',
       chunks: ['registration'],
       filename: 'registration.html'
     }),
     new HtmlWebpackPlugin({
-      hash: true,
       title: 'Login',
       template: './client/index.html',
       chunks: ['login'],
       filename: 'login.html'
     }),
     new HtmlWebpackPlugin({
-      hash: true,
       title: 'Sign Up',
       template: './client/index.html',
       chunks: ['signup'],
