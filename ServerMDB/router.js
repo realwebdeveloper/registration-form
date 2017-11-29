@@ -4,11 +4,17 @@ const path = require('path');
 const database = require('./database');
 
 const staticBasePath = '../ClientMDB/dist';
+const secret = 'a;lskdjflsajdi387823940184lksajdf;lkjsd'
 
 
 exports.handleRequest = function (request, response) {
     const { headers, method, url } = request;
-
+    let userInfo = headers.authKey;
+    let checkAuth = false;
+    userInfo = jwt.decode(userInfo, secret);
+    if (database.find(userInfo)) {
+      checkAuth = true;
+    }
     console.log('Request at: ', url);
     if (url.substr(0, 4) === "/api") {
         var api_url = url.slice(5);
@@ -60,23 +66,33 @@ exports.handleRequest = function (request, response) {
         if (method === 'GET'){
             switch (url) {
                 case "/":
-                    fs.readFile('../ClientMDB/dist/index.html', function (error, pageRes) {
-                        if (error) {
-                            response.writeHead(404);
-                            response.write('Contents you are looking are Not Found');
-                        }
-                        else {
-                            response.writeHead(200, { 'Content-Type': 'text/html' });
-                            response.write(pageRes);
-                        }
-                        response.end();
-                    });
+                    if (checkAuth) {
+                      response.writeHead(301, {Location: '/registration'});
+                      response.end();
+                    }
+                    else {
+                      response.writeHead(301, {Location: '/login'});
+                      response.end();
+                    }
                     break;
                 default:
+                    if (url.indexOf('.') === -1) url += '.html';
                     var resolvedBase = path.resolve(staticBasePath);
                     var safeSuffix = path.normalize(url).replace(/^(\.\.[\/\\])+/, '');
                     var fileLoc = path.join(resolvedBase, safeSuffix);
-                    console.log(fileLoc);
+                    if (checkAuth) {
+                      if (url == '/login.html' || url == '/signup.html') {
+                        response.writeHead(301, {Location: '/registration'});
+                        response.end();
+                        break;
+                      }
+                    } else {
+                      if (url == '/registration.html'){
+                        response.writeHead(301, {Location: '/login'});
+                        response.end();
+                        break;
+                      }
+                    }
                     fs.readFile(fileLoc, function (error, pageRes) {
                         if (error) {
                             response.writeHead(404);
