@@ -7,7 +7,7 @@ exports.insert = function(data) {
 
     MongoClient.connect(url, function (err, db) {
 
-        db.collection('accounts', function (err, collection) {
+        db.collection('peopleList', function (err, collection) {
             if (err) throw err;
             collection.insert(data);
         });
@@ -23,7 +23,7 @@ exports.queryAll = function(callback) {
 
     MongoClient.connect(url, function (err, db) {
 
-        db.collection('accounts', function (err, collection) {
+        db.collection('peopleList', function (err, collection) {
 
             collection.find().toArray(function (err, items) {
                 if (err) throw err;
