@@ -2,17 +2,16 @@ var exports = module.exports = {};
 const fs = require('fs');
 const path = require('path');
 const database = require('./database');
-const jwt = require('jwt-simple');
+const security = require('./security');
 
 const staticBasePath = '../ClientMDB/dist';
-const secret = 'a;lskdjflsajdi387823940184lksajdf;lkjsd'
 
 exports.handleRequest = function (request, response) {
     const { headers, method, url } = request;
     let userInfo = headers.authKey;
     let checkAuth = false;
-    userInfo = jwt.decode(userInfo, secret);
-    if (true || database.findOne(userInfo), (found) => {
+    userInfo = security.decrypt(userInfo);
+    if (true || database.findOne(JSON.parse(userInfo)), (found) => {
         checkAuth = found;
     }){
         if (url === '/redirect') {
