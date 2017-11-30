@@ -9,7 +9,7 @@ const staticBasePath = '../ClientMDB/dist';
 exports.handleRequest = function (request, response) {
     var { headers, method, url } = request;
     let userInfo = headers.authKey;
-    if (!userInfo) userInfo = 'abcd';
+    if (!userInfo) userInfo = security.encrypt('a');
     console.log(userInfo);
     let checkAuth = false;
     userInfo = security.decrypt(userInfo);
@@ -60,8 +60,19 @@ exports.handleRequest = function (request, response) {
                                 });
                                 break;
                             case 'login':
-                                response.writeHead(200);
-                                response.write('12345');
+                                let username = headers.username;
+                                let password = headers.password;
+                                let userinfo = {username: username, password: password};
+                                database.findOne(userinfo, (found) => {
+                                  let checkLogin = found;
+                                  if (checkLogin) {
+                                    response.writeHead(200);
+                                    response.write(security.encrypt(JSON.stringify(userinfo)))
+                                  }
+                                  else {
+                                    response.writeHead(401);
+                                  }
+                                });
                                 response.end();
                                 break;
                             default:
@@ -84,6 +95,27 @@ exports.handleRequest = function (request, response) {
                                     database.insert(json);
                                 });
                                 break;
+                            case 'signup':
+                                var body = '';
+                                var json = {};
+                                request.on('data',(chunk) => {
+                                  body += chunk;
+                                })
+                                let userAccount = JSON.parse(body);
+                                delete userAccount.password;
+                                database.findOne(userAccount, (found) => {
+                                  if (found) {
+                                    response.writeHead(400);
+                                  }
+                                  else {
+                                    response.writeHead(200);
+                                    request.on('end', function () {
+                                      json = JSON.parse(body);
+                                      database.insert(json);
+                                  });
+                                  }
+                                });
+                                response.end();
                             default:
                                 response.writeHead(404);
                                 response.write('Contents you are looking are Not Found');

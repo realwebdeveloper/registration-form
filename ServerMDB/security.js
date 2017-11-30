@@ -27,6 +27,6 @@ exports.encrypt = function(password) {
     return crypted;
 }
 
-console.log(exports.decrypt('abcd'));
+
 
 return module.exports;
