@@ -18441,25 +18441,26 @@ var Login = function (_React$Component) {
                 info: newInfo,
                 validate: newValidate
             });
-            _this.pushToServer(_this.state.info);
         };
 
-        _this.pushToServer = function (data) {
+        _this.login = function () {
             debugger;
 
             var xhr = new XMLHttpRequest();
             xhr.withCredentials = true;
 
-            xhr.addEventListener("readystatechange", function () {
-                console.log(this.readyState);
-                if (this.readyState === 1) {
-                    location.reload();
+            xhr.onreadystatechange = function () {
+                if (this.readyState == this.HEADERS_RECEIVED) {
+                    localStorage.setItem('authKey', xhr.getResponseHeader("authKey"));
+                    console.log(xhr.getResponseHeader("authKey"));
+                    console.log(xhr.getAllResponseHeaders());
                 }
-            });
+            };
 
-            xhr.open("POST", "http://localhost:8080/api/Login");
-            xhr.setRequestHeader("accept", "application/json");
-            xhr.send(JSON.stringify(data));
+            xhr.open("GET", "http://localhost:8080/api/login");
+            // xhr.setRequestHeader("username", data.username);
+            // xhr.setRequestHeader("password", data.password);
+            xhr.send();
         };
 
         _this.state = {
@@ -18505,7 +18506,9 @@ var Login = function (_React$Component) {
                 }),
                 _react2.default.createElement(
                     'button',
-                    null,
+                    {
+                        onClick: this.login
+                    },
                     'Log In'
                 )
             );

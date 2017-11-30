@@ -7,15 +7,19 @@ const security = require('./security');
 const staticBasePath = '../ClientMDB/dist';
 
 exports.handleRequest = function (request, response) {
-    const { headers, method, url } = request;
+    let { headers, method, url } = request;
     let userInfo = headers.authKey;
     let checkAuth = false;
-    userInfo = security.decrypt(userInfo);
-    if (true || database.findOne(JSON.parse(userInfo)), (found) => {
-        checkAuth = found;
-    }){
+    let reqUrl = headers.referer;
+    // userInfo = security.decrypt(userInfo);
+    // if (true || database.findOne(JSON.parse(userInfo)), (found) => {
+    //     checkAuth = found;
+    // }){
+    console.log('Request at: ', url);
+    response.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:8080/');
+    response.setHeader('Access-Control-Allow-Credentials', true);
+    {
         if (url === '/redirect') {
-            let reqUrl = headers.referer;
             if (checkAuth) {
                 if (reqUrl != '/registration') {
                     response.writeHead(301, { Location: '/registration' });
@@ -38,6 +42,7 @@ exports.handleRequest = function (request, response) {
         else {
             if (url.substr(0, 4) === "/api") {
                 var api_url = url.slice(5);
+                console.log(api_url);
                 switch (method) {
                     case 'GET':
                         switch (api_url) {
@@ -47,6 +52,10 @@ exports.handleRequest = function (request, response) {
                                     response.write(data);
                                     response.end();
                                 });
+                                break;
+                            case 'login':
+                                response.writeHead(200, { 'authKey': 'abcd' });
+                                response.end();
                                 break;
                             default:
                                 response.writeHead(404);
@@ -138,7 +147,6 @@ exports.handleRequest = function (request, response) {
             }
         }
     }
-    console.log('Request at: ', url);
 }
 
 return module.exports;

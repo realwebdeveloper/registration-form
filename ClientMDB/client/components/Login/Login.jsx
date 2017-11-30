@@ -20,7 +20,7 @@ export default class Login extends React.Component {
     redirect = () => {
         let xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
-
+        
         xhr.open("GET", "http://localhost:8080/redirect");
         xhr.setRequestHeader("authKey", localStorage.authKey);
         xhr.send();
@@ -48,7 +48,7 @@ export default class Login extends React.Component {
                     validate={this.state.validate.password}
                 ></Input>
                 <button
-                    onClick = {this.logins(this.state.info)}
+                    onClick = {this.login}
                 >Log In</button>
             </div>
         );
@@ -62,23 +62,24 @@ export default class Login extends React.Component {
             info: newInfo,
             validate: newValidate
         });
-        this.pushToServer(this.state.info)
     }
-    pushToServer = (data) => {
+    login = () => {
         debugger
     
         var xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
     
-        xhr.addEventListener("readystatechange", function () {
-          console.log(this.readyState);
-          if (this.readyState === 1) {
-            location.reload();
-          }
-        })
+        xhr.onreadystatechange = function () {
+            if (this.readyState == this.HEADERS_RECEIVED) {
+                localStorage.setItem('authKey',xhr.getResponseHeader("authKey"));
+                console.log(xhr.getResponseHeader("authKey"));
+                console.log(xhr.getAllResponseHeaders());
+            }
+        }
     
-        xhr.open("POST", "http://localhost:8080/api/Login");
-        xhr.setRequestHeader("accept", "application/json");
-        xhr.send(JSON.stringify(data));
+        xhr.open("GET", "http://localhost:8080/api/login");
+        // xhr.setRequestHeader("username", data.username);
+        // xhr.setRequestHeader("password", data.password);
+        xhr.send();
       }
 }
