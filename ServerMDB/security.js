@@ -20,4 +20,6 @@ exports.encrypt = function(password) {
     return crypted;
 }
 
+
+
 return module.exports;
