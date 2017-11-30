@@ -18428,7 +18428,7 @@ var Login = function (_React$Component) {
             xhr.withCredentials = true;
 
             xhr.open("GET", "http://localhost:8080/redirect");
-            xhr.setRequestHeader("encodedKey", localStorage.encodedKey);
+            xhr.setRequestHeader("authKey", localStorage.authKey);
             xhr.send();
         };
 
@@ -18441,6 +18441,25 @@ var Login = function (_React$Component) {
                 info: newInfo,
                 validate: newValidate
             });
+            _this.pushToServer(_this.state.info);
+        };
+
+        _this.pushToServer = function (data) {
+            debugger;
+
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener("readystatechange", function () {
+                console.log(this.readyState);
+                if (this.readyState === 1) {
+                    location.reload();
+                }
+            });
+
+            xhr.open("POST", "http://localhost:8080/api/Login");
+            xhr.setRequestHeader("accept", "application/json");
+            xhr.send(JSON.stringify(data));
         };
 
         _this.state = {
