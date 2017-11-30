@@ -47,7 +47,9 @@ export default class Login extends React.Component {
                     changeHandle={this._changHandle}
                     validate={this.state.validate.password}
                 ></Input>
-                <button>Log In</button>
+                <button
+                    onClick = {this.logins(this.state.info)}
+                >Log In</button>
             </div>
         );
     }
