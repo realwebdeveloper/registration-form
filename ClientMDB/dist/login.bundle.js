@@ -18447,6 +18447,7 @@ var Login = function (_React$Component) {
             });
 
             xhr.open("GET", "http://localhost:8080/api/login");
+            xhr.setRequestHeader('authKey', localStorage.authKey);
             xhr.send(data);
         };
 
