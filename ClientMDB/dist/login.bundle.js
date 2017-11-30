@@ -18443,20 +18443,34 @@ var Login = function (_React$Component) {
             });
         };
 
+        _this.handleStatus = function () {
+            _this.setState({
+                status: 'Your username / password is incorrect'
+            });
+        };
+
         _this.login = function () {
+            var handleStatus = _this.handleStatus;
+            var redirect = _this.redirect;
+
             var data = new FormData();
+            var info = _this.state.info;
+            data.append('username', info.username);
+            data.append('password', info.password);
 
             var xhr = new XMLHttpRequest();
             xhr.withCredentials = true;
 
             xhr.addEventListener("readystatechange", function () {
                 if (this.readyState === 4) {
-                    console.log(this.responseText);
+                    if (xhr.status === 401) handleStatus();else {
+                        localStorage.setItem('authKey', this.responseText);
+                        redirect();
+                    }
                 }
             });
 
             xhr.open("GET", "http://localhost:8080/api/login");
-            xhr.setRequestHeader('authKey', localStorage.authKey);
             xhr.send(data);
         };
 
@@ -18468,7 +18482,8 @@ var Login = function (_React$Component) {
             validate: {
                 username: false,
                 password: false
-            }
+            },
+            status: ''
         };
         _this.redirect();
         return _this;
@@ -18501,6 +18516,11 @@ var Login = function (_React$Component) {
                     changeHandle: this._changHandle,
                     validate: this.state.validate.password
                 }),
+                this.state.status != '' && _react2.default.createElement(
+                    'p',
+                    null,
+                    this.state.status
+                ),
                 _react2.default.createElement(
                     'button',
                     { onClick: this.login },

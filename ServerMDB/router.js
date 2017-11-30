@@ -8,22 +8,32 @@ const staticBasePath = '../ClientMDB/dist';
 
 exports.handleRequest = function (request, response) {
     var { headers, method, url } = request;
+    
+    console.log('Request at: ', url);
+    
     let userInfo = headers.authKey;
-    if (!userInfo) userInfo = security.encrypt('');
-    console.log(userInfo);
+
+    if (userInfo != '') userInfo = security.encrypt('');
+    
     let checkAuth = false;
     userInfo = security.decrypt(userInfo);
-    if (true || database.findOne(JSON.parse(userInfo)), (found) => {
-        checkAuth = found;
-    })
-    var origin = request.headers.origin;
-    console.log(origin);
+
+    // database.findOne(JSON.parse(userInfo), (found) => {
+    //     checkAuth = found;
+    //     console.log('checkAuth: ',checkAuth);
+    // });
+
+
     response.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:8080');
     response.setHeader('Access-Control-Allow-Credentials', 'true');
     response.setHeader('Access-Control-Allow-Headers', 'authKey');
+
     {
         if (url === '/redirect') {
             let reqUrl = headers.referer;
+            console.log(reqUrl);
+            reqUrl = reqUrl.slice(reqUrl.lastIndexOf('/'));
+            console.log(reqUrl);
             if (checkAuth) {
                 if (reqUrl != '/registration') {
                     response.writeHead(301, { Location: '/registration' });
@@ -187,7 +197,6 @@ exports.handleRequest = function (request, response) {
             }
         }
     }
-    console.log('Request at: ', url);
 }
 
 return module.exports;

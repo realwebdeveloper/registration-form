@@ -18446,6 +18446,47 @@ var SignUp = function (_React$Component) {
             });
         };
 
+        _this.checkValidate = function () {
+            var validate = _this.state.validate;
+            var info = _this.state.info;
+
+            for (var key in validate) {
+                if (!validate[key]) return false;
+            }
+            if (info.password1 != info.password2) return false;
+            return true;
+        };
+
+        _this.handleStatus = function (status) {
+            var message = 'Registered Successfully';
+            if (status === 1) message = 'Username existed';
+            if (status === 1) _this.setState({
+                status: message
+            });
+        };
+
+        _this.submit = function () {
+            handleStatus = _this.handleStatus;
+            if (!_this.checkValidate()) return;
+            var data = new FormData();
+            var userInfo = _this.state.info;
+
+            data.append("username", userInfo.username);
+            data.append("password", userInfo.password1);
+
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
+                    if (xhr.status === 400) handleStatus(1);else handleStatus(2);
+                }
+            });
+
+            xhr.open("POST", "http://localhost/8080/api/signup");
+            xhr.send(data);
+        };
+
         _this.state = {
             info: {
                 username: '',
@@ -18456,7 +18497,8 @@ var SignUp = function (_React$Component) {
                 username: false,
                 password1: false,
                 password2: false
-            }
+            },
+            status: ''
         };
         _this.redirect();
         return _this;
@@ -18477,7 +18519,7 @@ var SignUp = function (_React$Component) {
                     type: 'text',
                     label: 'Username',
                     property: 'username',
-                    validateAndMessage: [{ regExp: '^.{0,7}$', message: 'Your name is at least 8 character', valid: false }],
+                    validateAndMessage: [{ regExp: '^.{0,5}$', message: 'Your name is at least 6 character', valid: false }],
                     changeHandle: this._changHandle,
                     validate: this.state.validate.username
                 }),
@@ -18485,7 +18527,7 @@ var SignUp = function (_React$Component) {
                     type: 'password',
                     label: 'Password',
                     property: 'password1',
-                    validateAndMessage: [{ regExp: '^.{0,7}$', message: 'Your password is at least 6 characters', valid: false }],
+                    validateAndMessage: [{ regExp: '^.{0,5}$', message: 'Your password is at least 6 characters', valid: false }],
                     changeHandle: this._changHandle,
                     validate: this.state.validate.password1
                 }),
@@ -18502,9 +18544,14 @@ var SignUp = function (_React$Component) {
                     null,
                     '2 passwords must be the same'
                 ),
+                this.state.status != '' && _react2.default.createElement(
+                    'p',
+                    null,
+                    this.state.status
+                ),
                 _react2.default.createElement(
                     'button',
-                    null,
+                    { onClick: this.submit },
                     'Sign Up'
                 )
             );

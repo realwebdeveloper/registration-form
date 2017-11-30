@@ -104,6 +104,7 @@ export default class Form extends Component {
     );
   }
   redirect = () => {
+    debugger
     let xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
 

@@ -18557,6 +18557,16 @@ var Form = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, props));
 
+    _this.redirect = function () {
+      debugger;
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+
+      xhr.open("GET", "http://localhost:8080/redirect");
+      xhr.setRequestHeader("authKey", localStorage.authKey);
+      xhr.send();
+    };
+
     _this._changHandle = function (property, value, validate) {
       var newInfo = JSON.parse(JSON.stringify(_this.state.info));
       var newValidate = JSON.parse(JSON.stringify(_this.state.validate));
@@ -18566,6 +18576,11 @@ var Form = function (_Component) {
         info: newInfo,
         validate: newValidate
       });
+    };
+
+    _this.logOut = function () {
+      localStorage.removeItem('authKey');
+      _this.redirect();
     };
 
     _this._addUserInfo = function () {
@@ -18590,6 +18605,7 @@ var Form = function (_Component) {
         city: true
       }
     };
+    _this.redirect();
     return _this;
   }
 
@@ -18617,6 +18633,15 @@ var Form = function (_Component) {
           _react2.default.createElement(
             'div',
             null,
+            _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(
+                'a',
+                { onClick: this.logOut },
+                'Log out'
+              )
+            ),
             _react2.default.createElement(_Input2.default, {
               type: 'text',
               label: 'Name',
