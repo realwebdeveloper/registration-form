@@ -15,16 +15,16 @@ export default class Login extends React.Component {
                 password: false
             }
         }
-        this.redirect();
+        //this.redirect();
     }
-    redirect = () => {
-        let xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
+    // redirect = () => {
+    //     let xhr = new XMLHttpRequest();
+    //     xhr.withCredentials = true;
 
-        xhr.open("GET", "http://localhost:8080/redirect");
-        xhr.setRequestHeader("authKey", localStorage.authKey);
-        xhr.send();
-    }
+    //     xhr.open("GET", "http://localhost:8080/redirect");
+    //     xhr.setRequestHeader("authKey", localStorage.authKey);
+    //     xhr.send();
+    // }
     render() {
         return (
             <div className='Login'>
@@ -47,7 +47,7 @@ export default class Login extends React.Component {
                     changeHandle={this._changHandle}
                     validate={this.state.validate.password}
                 ></Input>
-                <button>Log In</button>
+                <button onClick = {this.login} >Log In</button>
             </div>
         );
     }
@@ -60,23 +60,21 @@ export default class Login extends React.Component {
             info: newInfo,
             validate: newValidate
         });
-        this.pushToServer(this.state.info)
     }
-    pushToServer = (data) => {
-        debugger
-    
-        var xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
-    
-        xhr.addEventListener("readystatechange", function () {
-          console.log(this.readyState);
-          if (this.readyState === 1) {
-            location.reload();
-          }
-        })
-    
-        xhr.open("POST", "http://localhost:8080/api/Login");
-        xhr.setRequestHeader("accept", "application/json");
-        xhr.send(JSON.stringify(data));
-      }
+    login = () => {
+      var data = new FormData();
+
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+      
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+          console.log(this.responseText);
+        }
+      });
+      
+      xhr.open("GET", "http://localhost:8080/api/login");
+      xhr.setRequestHeader('authKey', localStorage.authKey);
+      xhr.send(data);
+    }
 }

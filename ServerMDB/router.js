@@ -7,35 +7,46 @@ const security = require('./security');
 const staticBasePath = '../ClientMDB/dist';
 
 exports.handleRequest = function (request, response) {
-    const { headers, method, url } = request;
+    var { headers, method, url } = request;
     let userInfo = headers.authKey;
+    if (!userInfo) userInfo = 'abcd';
+    console.log(userInfo);
     let checkAuth = false;
     userInfo = security.decrypt(userInfo);
     if (true || database.findOne(JSON.parse(userInfo)), (found) => {
         checkAuth = found;
-    }){
-        if (url === '/redirect') {
-            let reqUrl = headers.referer;
-            if (checkAuth) {
-                if (reqUrl != '/registration') {
-                    response.writeHead(301, { Location: '/registration' });
-                    response.end();
-                }
-                else {
-                    response.end();
-                }
-            }
-            else {
-                if (reqUrl === '/registration') {
-                    response.writeHead(301, { Location: '/login' });
-                    response.end();
-                }
-                else {
-                    response.end();
-                }
-            }
-        }
-        else {
+    })
+    var origin = request.headers.origin;
+    console.log(origin);
+    response.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:8080');
+    response.setHeader('Access-Control-Allow-Credentials', 'true');
+    {
+        // if (url === '/redirect') {
+        //     let reqUrl = headers.referer;
+        //     if (checkAuth) {
+        //         if (reqUrl != '/registration') {
+        //             response.writeHead(301, { Location: '/registration' });
+        //             response.end();
+        //         }
+        //         else {
+        //             response.end();
+        //         }
+        //     }
+        //     else {
+        //         if (reqUrl === '/registration') {
+        //             response.writeHead(301, { 
+        //               Location: '/login',
+        //             });
+
+        //             response.end();
+        //         }
+        //         else {
+        //             response.end();
+        //         }
+        //     }
+        // }
+        // else 
+        {
             if (url.substr(0, 4) === "/api") {
                 var api_url = url.slice(5);
                 switch (method) {
@@ -47,6 +58,11 @@ exports.handleRequest = function (request, response) {
                                     response.write(data);
                                     response.end();
                                 });
+                                break;
+                            case 'login':
+                                response.writeHead(200);
+                                response.write('12345');
+                                response.end();
                                 break;
                             default:
                                 response.writeHead(404);

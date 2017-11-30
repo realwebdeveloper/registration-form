@@ -19,3 +19,5 @@ exports.encrypt = function(password) {
     crypted += cipher.final('hex');
     return crypted;
 }
+
+return module.exports;

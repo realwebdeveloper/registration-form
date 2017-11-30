@@ -18423,15 +18423,6 @@ var Login = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
 
-        _this.redirect = function () {
-            var xhr = new XMLHttpRequest();
-            xhr.withCredentials = true;
-
-            xhr.open("GET", "http://localhost:8080/redirect");
-            xhr.setRequestHeader("authKey", localStorage.authKey);
-            xhr.send();
-        };
-
         _this._changHandle = function (property, value, validate) {
             var newInfo = JSON.parse(JSON.stringify(_this.state.info));
             var newValidate = JSON.parse(JSON.stringify(_this.state.validate));
@@ -18441,25 +18432,22 @@ var Login = function (_React$Component) {
                 info: newInfo,
                 validate: newValidate
             });
-            _this.pushToServer(_this.state.info);
         };
 
-        _this.pushToServer = function (data) {
-            debugger;
+        _this.login = function () {
+            var data = new FormData();
 
             var xhr = new XMLHttpRequest();
             xhr.withCredentials = true;
 
             xhr.addEventListener("readystatechange", function () {
-                console.log(this.readyState);
-                if (this.readyState === 1) {
-                    location.reload();
+                if (this.readyState === 4) {
+                    console.log(this.responseText);
                 }
             });
 
-            xhr.open("POST", "http://localhost:8080/api/Login");
-            xhr.setRequestHeader("accept", "application/json");
-            xhr.send(JSON.stringify(data));
+            xhr.open("GET", "http://localhost:8080/api/login");
+            xhr.send(data);
         };
 
         _this.state = {
@@ -18471,10 +18459,18 @@ var Login = function (_React$Component) {
                 username: false,
                 password: false
             }
-        };
-        _this.redirect();
-        return _this;
+            //this.redirect();
+        };return _this;
     }
+    // redirect = () => {
+    //     let xhr = new XMLHttpRequest();
+    //     xhr.withCredentials = true;
+
+    //     xhr.open("GET", "http://localhost:8080/redirect");
+    //     xhr.setRequestHeader("authKey", localStorage.authKey);
+    //     xhr.send();
+    // }
+
 
     _createClass(Login, [{
         key: 'render',
@@ -18505,7 +18501,7 @@ var Login = function (_React$Component) {
                 }),
                 _react2.default.createElement(
                     'button',
-                    null,
+                    { onClick: this.login },
                     'Log In'
                 )
             );
