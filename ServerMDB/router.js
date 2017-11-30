@@ -9,7 +9,7 @@ const staticBasePath = '../ClientMDB/dist';
 exports.handleRequest = function (request, response) {
     var { headers, method, url } = request;
     let userInfo = headers.authKey;
-    if (!userInfo) userInfo = security.encrypt('a');
+    if (!userInfo) userInfo = security.encrypt('');
     console.log(userInfo);
     let checkAuth = false;
     userInfo = security.decrypt(userInfo);
@@ -20,32 +20,33 @@ exports.handleRequest = function (request, response) {
     console.log(origin);
     response.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:8080');
     response.setHeader('Access-Control-Allow-Credentials', 'true');
+    response.setHeader('Access-Control-Allow-Headers', 'authKey');
     {
-        // if (url === '/redirect') {
-        //     let reqUrl = headers.referer;
-        //     if (checkAuth) {
-        //         if (reqUrl != '/registration') {
-        //             response.writeHead(301, { Location: '/registration' });
-        //             response.end();
-        //         }
-        //         else {
-        //             response.end();
-        //         }
-        //     }
-        //     else {
-        //         if (reqUrl === '/registration') {
-        //             response.writeHead(301, { 
-        //               Location: '/login',
-        //             });
+        if (url === '/redirect') {
+            let reqUrl = headers.referer;
+            if (checkAuth) {
+                if (reqUrl != '/registration') {
+                    response.writeHead(301, { Location: '/registration' });
+                    response.end();
+                }
+                else {
+                    response.end();
+                }
+            }
+            else {
+                if (reqUrl === '/registration') {
+                    response.writeHead(301, { 
+                      Location: '/login',
+                    });
 
-        //             response.end();
-        //         }
-        //         else {
-        //             response.end();
-        //         }
-        //     }
-        // }
-        // else 
+                    response.end();
+                }
+                else {
+                    response.end();
+                }
+            }
+        }
+        else 
         {
             if (url.substr(0, 4) === "/api") {
                 var api_url = url.slice(5);

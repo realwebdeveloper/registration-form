@@ -18426,6 +18426,15 @@ var SignUp = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (SignUp.__proto__ || Object.getPrototypeOf(SignUp)).call(this, props));
 
+        _this.redirect = function () {
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.open("GET", "http://localhost:8080/redirect");
+            xhr.setRequestHeader("authKey", localStorage.authKey);
+            xhr.send();
+        };
+
         _this._changHandle = function (property, value, validate) {
             var newInfo = JSON.parse(JSON.stringify(_this.state.info));
             var newValidate = JSON.parse(JSON.stringify(_this.state.validate));
@@ -18449,6 +18458,7 @@ var SignUp = function (_React$Component) {
                 password2: false
             }
         };
+        _this.redirect();
         return _this;
     }
 

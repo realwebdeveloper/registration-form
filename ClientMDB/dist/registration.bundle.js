@@ -18414,6 +18414,15 @@ var App = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
+    _this.redirect = function () {
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+
+      xhr.open("GET", "http://localhost:8080/redirect");
+      xhr.setRequestHeader("authKey", localStorage.authKey);
+      xhr.send();
+    };
+
     _this._addUserInfo = function (userInfo) {
       debugger;
       var newListUserInfo = _this.state.listUserInfo.map(function (user, index) {
@@ -18474,6 +18483,7 @@ var App = function (_Component) {
       listUserInfo: []
     };
     _this.getServerData();
+    _this.redirect();
     return _this;
   }
 

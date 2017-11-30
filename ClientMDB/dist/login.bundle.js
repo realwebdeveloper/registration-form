@@ -18423,6 +18423,15 @@ var Login = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
 
+        _this.redirect = function () {
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.open("GET", "http://localhost:8080/redirect");
+            xhr.setRequestHeader("authKey", localStorage.authKey);
+            xhr.send();
+        };
+
         _this._changHandle = function (property, value, validate) {
             var newInfo = JSON.parse(JSON.stringify(_this.state.info));
             var newValidate = JSON.parse(JSON.stringify(_this.state.validate));
@@ -18447,6 +18456,7 @@ var Login = function (_React$Component) {
             });
 
             xhr.open("GET", "http://localhost:8080/api/login");
+            xhr.setRequestHeader('authKey', localStorage.authKey);
             xhr.send(data);
         };
 
@@ -18459,18 +18469,10 @@ var Login = function (_React$Component) {
                 username: false,
                 password: false
             }
-            //this.redirect();
-        };return _this;
+        };
+        _this.redirect();
+        return _this;
     }
-    // redirect = () => {
-    //     let xhr = new XMLHttpRequest();
-    //     xhr.withCredentials = true;
-
-    //     xhr.open("GET", "http://localhost:8080/redirect");
-    //     xhr.setRequestHeader("authKey", localStorage.authKey);
-    //     xhr.send();
-    // }
-
 
     _createClass(Login, [{
         key: 'render',

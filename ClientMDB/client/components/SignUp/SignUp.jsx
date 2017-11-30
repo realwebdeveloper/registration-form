@@ -17,6 +17,15 @@ export default class SignUp extends React.Component {
                 password2: false
             }
         }
+      this.redirect();
+    }
+    redirect = () => {
+      let xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+
+      xhr.open("GET", "http://localhost:8080/redirect");
+      xhr.setRequestHeader("authKey", localStorage.authKey);
+      xhr.send();
     }
     render() {
         return (
