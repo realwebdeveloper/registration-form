@@ -26,6 +26,7 @@ export default class Form extends Component {
         city: true
       }
     }
+    this.redirect();
   }
   render() {
     return (
@@ -40,6 +41,9 @@ export default class Form extends Component {
             changeHandle = {this._changHandle}
           />
           <div>
+            <div>
+              <a onClick = {this.logOut}>Log out</a>
+            </div>
             <Input 
             type = "text"
             label = "Name"
@@ -99,6 +103,14 @@ export default class Form extends Component {
       </div>
     );
   }
+  redirect = () => {
+    let xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.open("GET", "http://localhost:8080/redirect");
+    xhr.setRequestHeader("authKey", localStorage.authKey);
+    xhr.send();
+  }
   _changHandle = (property, value, validate) => {
     let newInfo = JSON.parse(JSON.stringify(this.state.info));
     let newValidate = JSON.parse(JSON.stringify(this.state.validate));
@@ -108,6 +120,10 @@ export default class Form extends Component {
       info: newInfo,
       validate: newValidate
     })
+  }
+  logOut = () => {
+    localStorage.removeItem('authKey');
+    this.redirect();
   }
   _addUserInfo = () => {
     this.props.addUserInfo(this.state)

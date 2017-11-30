@@ -13,7 +13,8 @@ export default class Login extends React.Component {
             validate: {
                 username: false,
                 password: false
-            }
+            },
+            status: ''
         }
         this.redirect();
     }
@@ -47,6 +48,9 @@ export default class Login extends React.Component {
                     changeHandle={this._changHandle}
                     validate={this.state.validate.password}
                 ></Input>
+                {(this.state.status != '') &&
+                  <p>{this.state.status}</p>
+                }
                 <button onClick = {this.login} >Log In</button>
             </div>
         );
@@ -61,20 +65,35 @@ export default class Login extends React.Component {
             validate: newValidate
         });
     }
+    handleStatus = () => {
+      this.setState({
+        status: 'Your username / password is incorrect'
+      })
+    }
     login = () => {
+      var handleStatus = this.handleStatus;
+      var redirect = this.redirect;
+
       var data = new FormData();
+      var info = this.state.info;
+      data.append('username', info.username);
+      data.append('password', info.password);
 
       var xhr = new XMLHttpRequest();
       xhr.withCredentials = true;
       
       xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
-          console.log(this.responseText);
+            if (xhr.status === 401) handleStatus();
+            else 
+            {
+              localStorage.setItem('authKey', this.responseText);
+              redirect();
+            }
         }
       });
       
       xhr.open("GET", "http://localhost:8080/api/login");
-      xhr.setRequestHeader('authKey', localStorage.authKey);
       xhr.send(data);
     }
 }
