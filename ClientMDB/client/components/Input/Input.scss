@@ -1,8 +1,9 @@
 .Input {
+    // display: flex;
     label {
         &:first-of-type {
             display: inline-block;
-            width: 30%;
+            width: 20%;
             height: 15px;
             text-align: right;
             font-weight: bold;

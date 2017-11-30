@@ -1,5 +1,6 @@
 import React from 'react';
 import Input from '../Input/Input.jsx';
+import './Login.scss'
 
 export default class Login extends React.Component {
     constructor(props){
@@ -58,6 +59,24 @@ export default class Login extends React.Component {
         this.setState({
             info: newInfo,
             validate: newValidate
-        })
+        });
+        this.pushToServer(this.state.info)
     }
+    pushToServer = (data) => {
+        debugger
+    
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+    
+        xhr.addEventListener("readystatechange", function () {
+          console.log(this.readyState);
+          if (this.readyState === 1) {
+            location.reload();
+          }
+        })
+    
+        xhr.open("POST", "http://localhost:8080/api/Login");
+        xhr.setRequestHeader("accept", "application/json");
+        xhr.send(JSON.stringify(data));
+      }
 }
