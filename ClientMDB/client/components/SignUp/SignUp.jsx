@@ -108,7 +108,7 @@ export default class SignUp extends React.Component {
         })
     }
     submit = () => {
-        handleStatus = this.handleStatus;
+        let handleStatus = this.handleStatus;
         if (!this.checkValidate()) return;
         var data = new FormData();
         var userInfo = this.state.info;
@@ -127,6 +127,6 @@ export default class SignUp extends React.Component {
         });
 
         xhr.open("POST", "http://localhost/8080/api/signup");
-        xhr.send(data);
+        xhr.send(JSON.stringify(userInfo));
     }
 }

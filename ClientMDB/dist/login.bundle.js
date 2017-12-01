@@ -18268,7 +18268,6 @@ var Input = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
 
     _this._changeHandle = function (label, e) {
-      debugger;
       var newValue = e.target.value;
       var newMessage = "";
       var newValidate = true;

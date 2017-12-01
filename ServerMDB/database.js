@@ -36,7 +36,6 @@ exports.queryAll = function(callback) {
 }
 
 exports.findOne = function (userInfo, callback) {
-    console.log(2);
     var url = 'mongodb://localhost:27017/myproject';
 
     var MongoClient = require('mongodb').MongoClient;

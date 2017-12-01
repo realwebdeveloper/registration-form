@@ -28,7 +28,6 @@ export default class Input extends Component {
     );
   }
   _changeHandle = (label, e) => {
-    debugger
     let newValue = e.target.value;
     let newMessage = "";
     let newValidate = true;

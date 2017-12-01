@@ -18268,7 +18268,6 @@ var Input = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
 
     _this._changeHandle = function (label, e) {
-      debugger;
       var newValue = e.target.value;
       var newMessage = "";
       var newValidate = true;
@@ -18474,7 +18473,7 @@ var SignUp = function (_React$Component) {
         };
 
         _this.submit = function () {
-            handleStatus = _this.handleStatus;
+            var handleStatus = _this.handleStatus;
             if (!_this.checkValidate()) return;
             var data = new FormData();
             var userInfo = _this.state.info;
@@ -18492,7 +18491,7 @@ var SignUp = function (_React$Component) {
             });
 
             xhr.open("POST", "http://localhost/8080/api/signup");
-            xhr.send(data);
+            xhr.send(JSON.stringify(userInfo));
         };
 
         _this.state = {
