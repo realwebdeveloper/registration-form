@@ -41,9 +41,6 @@ export default class Form extends Component {
             changeHandle = {this._changHandle}
           />
           <div>
-            <div>
-              <a onClick = {this.logOut}>Log out</a>
-            </div>
             <Input 
             type = "text"
             label = "Name"
@@ -121,10 +118,6 @@ export default class Form extends Component {
       info: newInfo,
       validate: newValidate
     })
-  }
-  logOut = () => {
-    localStorage.removeItem('authKey');
-    this.redirect();
   }
   _addUserInfo = () => {
     this.props.addUserInfo(this.state)

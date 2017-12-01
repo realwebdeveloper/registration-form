@@ -16,6 +16,14 @@ export default class App extends Component {
     let xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
 
+    xhr.addEventListener("readystatechange", function () {
+      if (this.readyState === 4) {
+        if (xhr.status == 403) {
+          window.location.replace('http://localhost:8080/login');
+        }
+      }
+    })
+
     xhr.open("GET", "http://localhost:8080/redirect");
     xhr.setRequestHeader("authKey", localStorage.authKey);
     xhr.send();
@@ -23,6 +31,7 @@ export default class App extends Component {
   render() {
     return (
       <div className='page'>
+        {/* <button onClick={this.logOut}>Log out</button> */}
         <Form addUserInfo={this._addUserInfo}/>
         <Table 
           listUserInfo = {this.state.listUserInfo}
@@ -82,5 +91,9 @@ export default class App extends Component {
     xhr.open("GET", "http://localhost:8080/api/ListUserInfo");
     xhr.setRequestHeader("accept", "application/json");
     xhr.send();
+  }
+  logOut = () => {
+    localStorage.removeItem('authKey');
+    this.redirect();
   }
 }

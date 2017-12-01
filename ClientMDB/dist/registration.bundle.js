@@ -18418,6 +18418,14 @@ var App = function (_Component) {
       var xhr = new XMLHttpRequest();
       xhr.withCredentials = true;
 
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+          if (xhr.status == 403) {
+            window.location.replace('http://localhost:8080/login');
+          }
+        }
+      });
+
       xhr.open("GET", "http://localhost:8080/redirect");
       xhr.setRequestHeader("authKey", localStorage.authKey);
       xhr.send();
@@ -18477,6 +18485,11 @@ var App = function (_Component) {
       xhr.open("GET", "http://localhost:8080/api/ListUserInfo");
       xhr.setRequestHeader("accept", "application/json");
       xhr.send();
+    };
+
+    _this.logOut = function () {
+      localStorage.removeItem('authKey');
+      _this.redirect();
     };
 
     _this.state = {
@@ -18578,11 +18591,6 @@ var Form = function (_Component) {
       });
     };
 
-    _this.logOut = function () {
-      localStorage.removeItem('authKey');
-      _this.redirect();
-    };
-
     _this._addUserInfo = function () {
       _this.props.addUserInfo(_this.state);
     };
@@ -18633,15 +18641,6 @@ var Form = function (_Component) {
           _react2.default.createElement(
             'div',
             null,
-            _react2.default.createElement(
-              'div',
-              null,
-              _react2.default.createElement(
-                'a',
-                { onClick: this.logOut },
-                'Log out'
-              )
-            ),
             _react2.default.createElement(_Input2.default, {
               type: 'text',
               label: 'Name',

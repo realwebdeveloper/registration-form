@@ -21,12 +21,20 @@ export default class SignUp extends React.Component {
       this.redirect();
     }
     redirect = () => {
-      let xhr = new XMLHttpRequest();
-      xhr.withCredentials = true;
+        let xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
 
-      xhr.open("GET", "http://localhost:8080/redirect");
-      xhr.setRequestHeader("authKey", localStorage.authKey);
-      xhr.send();
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                if (xhr.status == 403) {
+                    window.location.replace('http://localhost:8080/registration');
+                }
+            }
+        })
+
+        xhr.open("GET", "http://localhost:8080/redirect");
+        xhr.setRequestHeader("authKey", localStorage.authKey);
+        xhr.send();
     }
     render() {
         return (

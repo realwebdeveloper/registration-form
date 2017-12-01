@@ -22,6 +22,14 @@ export default class Login extends React.Component {
         let xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
 
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                if (xhr.status == 403){
+                    window.location.replace('http://localhost:8080/registration');
+                }
+            }
+        })
+
         xhr.open("GET", "http://localhost:8080/redirect");
         xhr.setRequestHeader("authKey", localStorage.authKey);
         xhr.send();

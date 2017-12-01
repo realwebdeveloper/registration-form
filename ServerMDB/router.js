@@ -15,7 +15,7 @@ exports.handleRequest = function (request, response) {
 
     if (userInfo != '') userInfo = security.encrypt('');
     
-    let checkAuth = false;
+    let checkAuth = true;
     userInfo = security.decrypt(userInfo);
 
     // database.findOne(JSON.parse(userInfo), (found) => {
@@ -31,12 +31,11 @@ exports.handleRequest = function (request, response) {
     {
         if (url === '/redirect') {
             let reqUrl = headers.referer;
-            console.log(reqUrl);
             reqUrl = reqUrl.slice(reqUrl.lastIndexOf('/'));
-            console.log(reqUrl);
+            console.log('Redirect from: ' + reqUrl);
             if (checkAuth) {
                 if (reqUrl != '/registration') {
-                    response.writeHead(301, { Location: '/registration' });
+                    response.writeHead(403);
                     response.end();
                 }
                 else {
@@ -45,9 +44,7 @@ exports.handleRequest = function (request, response) {
             }
             else {
                 if (reqUrl === '/registration') {
-                    response.writeHead(301, { 
-                      Location: '/login',
-                    });
+                    response.writeHead(403);
 
                     response.end();
                 }
