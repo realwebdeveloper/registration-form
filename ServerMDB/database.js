@@ -46,8 +46,12 @@ exports.findOne = function (dbName, userInfo, callback) {
             
             collection.findOne(userInfo,function (err, user) {
                 if (err) throw err;
-                if (user) callback(true); 
-                else callback(false);
+                if (user) {
+                    callback(true); 
+                }
+                else {
+                    callback(false);
+                }
             });
         });
 

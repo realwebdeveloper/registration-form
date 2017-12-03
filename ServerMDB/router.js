@@ -21,12 +21,14 @@ exports.handleRequest = function (request, response) {
 
     database.findOne('accounts',JSON.parse(userInfo), (found) => {
         checkAuth = found;
+
         {
             if (url === '/redirect') {
                 let reqUrl = headers.referer;
                 reqUrl = reqUrl.slice(reqUrl.lastIndexOf('/'));
                 console.log('Redirect from: ' + reqUrl);
                 if (checkAuth) {
+                    console.log(1);
                     if (reqUrl != '/registration') {
                         response.writeHead(403);
                         response.end();
@@ -63,14 +65,19 @@ exports.handleRequest = function (request, response) {
                                     let username = headers.username;
                                     let password = headers.password;
                                     let userinfo = { username: username, password: password };
-                                    database.findOne('accounts',userinfo, (found) => {
+                                    console.log('Request log in as ' + userinfo.username);
+                                    database.findOne('accounts', userinfo, (found) => {
                                         let checkLogin = found;
                                         if (checkLogin) {
                                             response.writeHead(200);
+                                            console.log('Authkey is: ' + security.encrypt(JSON.stringify(userinfo)));
                                             response.write(security.encrypt(JSON.stringify(userinfo)))
                                         }
                                         else {
-                                            response.writeHead(401);
+                                            // response.writeHead(401);
+                                            response.statusCode = 401;
+                                            console.log(response);
+                                            console.log('Log in failed');
                                         }
                                     });
                                     response.end();
@@ -188,12 +195,14 @@ exports.handleRequest = function (request, response) {
                 }
             }
         }
+
+        // response.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:8080');
+        // response.setHeader('Access-Control-Allow-Credentials', 'true');
+        // response.setHeader('Access-Control-Allow-Headers', 'authKey');
+
     });
 
 
-    response.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:8080');
-    response.setHeader('Access-Control-Allow-Credentials', 'true');
-    response.setHeader('Access-Control-Allow-Headers', 'authKey');
 
 }
 

@@ -82,10 +82,7 @@ export default class Login extends React.Component {
       var handleStatus = this.handleStatus;
       var redirect = this.redirect;
 
-      var data = new FormData();
       var info = this.state.info;
-      data.append('username', info.username);
-      data.append('password', info.password);
 
       var xhr = new XMLHttpRequest();
       xhr.withCredentials = true;
@@ -96,12 +93,15 @@ export default class Login extends React.Component {
             else 
             {
               localStorage.setItem('authKey', this.responseText);
+                alert('Loged in successfully');
               redirect();
             }
         }
       });
       
       xhr.open("GET", "http://localhost:8080/api/login");
-      xhr.send(data);
+      xhr.setRequestHeader('username', info.username);
+      xhr.setRequestHeader('password', info.password);
+      xhr.send();
     }
 }
