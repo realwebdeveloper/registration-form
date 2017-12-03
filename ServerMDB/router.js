@@ -19,7 +19,7 @@ exports.handleRequest = function (request, response) {
     
     userInfo = security.decrypt(userInfo);
 
-    database.findOne(JSON.parse(userInfo), (found) => {
+    database.findOne('accounts',JSON.parse(userInfo), (found) => {
         checkAuth = found;
         {
             if (url === '/redirect') {
@@ -54,7 +54,7 @@ exports.handleRequest = function (request, response) {
                             switch (api_url) {
                                 case 'ListUserInfo':
                                     response.writeHead(200, { 'Content-Type': 'text/html' });
-                                    database.queryAll(function (data) {
+                                    database.queryAll('peopleList',function (data) {
                                         response.write(data);
                                         response.end();
                                     });
@@ -63,7 +63,7 @@ exports.handleRequest = function (request, response) {
                                     let username = headers.username;
                                     let password = headers.password;
                                     let userinfo = { username: username, password: password };
-                                    database.findOne(userinfo, (found) => {
+                                    database.findOne('accounts',userinfo, (found) => {
                                         let checkLogin = found;
                                         if (checkLogin) {
                                             response.writeHead(200);
@@ -92,7 +92,7 @@ exports.handleRequest = function (request, response) {
                                     });
                                     request.on('end', function () {
                                         json = JSON.parse(body);
-                                        database.insert(json);
+                                        database.insert('peopleList', json);
                                     });
                                     break;
                                 case 'signup':
@@ -101,20 +101,21 @@ exports.handleRequest = function (request, response) {
                                     request.on('data', (chunk) => {
                                         body += chunk;
                                     })
-                                    request.on('end', function () {
+                                    request.on('end', function() {
                                         json = JSON.parse(body);
                                         let userAccount = json;
+                                        console.log(userAccount);
                                         delete userAccount.password;
-                                        database.findOne(userAccount, (found) => {
+                                        database.findOne('accounts',userAccount, function(found){
                                             if (found) {
                                                 response.writeHead(400);
                                             }
                                             else {
                                                 response.writeHead(200);
-                                                database.insert(json);
+                                                database.insert('accounts',json);
                                             }
                                             response.end();
-                                        });
+                                        })
                                     });
                                     break;
                                 default:

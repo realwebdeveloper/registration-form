@@ -18475,17 +18475,16 @@ var SignUp = function (_React$Component) {
         _this.submit = function () {
             var handleStatus = _this.handleStatus;
             if (!_this.checkValidate()) return;
-            var data = new FormData();
-            var userInfo = _this.state.info;
-
-            data.append("username", userInfo.username);
-            data.append("password", userInfo.password1);
+            var userInfo = {
+                username: _this.state.userInfo.username,
+                password: _this.state.userInfo.password1
+            };
 
             var xhr = new XMLHttpRequest();
             xhr.withCredentials = true;
 
             xhr.addEventListener("readystatechange", function () {
-                if (this.readyState === 4) {
+                if (this.readyState === 1) {
                     if (xhr.status === 400) handleStatus(1);else handleStatus(2);
                 }
             });

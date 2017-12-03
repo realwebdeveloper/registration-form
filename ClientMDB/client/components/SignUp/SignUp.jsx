@@ -110,17 +110,16 @@ export default class SignUp extends React.Component {
     submit = () => {
         let handleStatus = this.handleStatus;
         if (!this.checkValidate()) return;
-        var data = new FormData();
-        var userInfo = this.state.info;
-
-        data.append("username", userInfo.username);
-        data.append("password", userInfo.password1);
+        let userInfo = {
+            username: this.state.userInfo.username,
+            password: this.state.userInfo.password1
+        };
 
         var xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
 
         xhr.addEventListener("readystatechange", function () {
-            if (this.readyState === 4) {
+            if (this.readyState === 1) {
                 if (xhr.status === 400) handleStatus(1);
                 else handleStatus(2);
             }
