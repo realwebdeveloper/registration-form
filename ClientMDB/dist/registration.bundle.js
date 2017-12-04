@@ -18448,10 +18448,7 @@ var App = function (_Component) {
       xhr.withCredentials = true;
 
       xhr.addEventListener("readystatechange", function () {
-<<<<<<< HEAD
         console.log(this.readyState);
-=======
->>>>>>> 5710ed766aa85f7d721ab3c05f064b8126e14891
         if (this.readyState === 4) {
           location.reload();
           // getServerData();
@@ -18513,10 +18510,14 @@ var App = function (_Component) {
             'Log out'
           )
         ),
-        _react2.default.createElement(_Form2.default, { addUserInfo: this._addUserInfo }),
-        _react2.default.createElement(_Table2.default, {
-          listUserInfo: this.state.listUserInfo
-        })
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(_Form2.default, { addUserInfo: this._addUserInfo }),
+          _react2.default.createElement(_Table2.default, {
+            listUserInfo: this.state.listUserInfo
+          })
+        )
       );
     }
   }]);

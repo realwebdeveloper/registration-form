@@ -4,7 +4,8 @@
         &:first-child {
           text-align: right;
         }
-        &:second-child {}
+        &:second-child {
+        }
         &:nth-child(3) {}
     }
 }

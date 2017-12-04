@@ -118,12 +118,12 @@
   .wrapper h1 {
     color: grey;
     margin-bottom: 50px; }
-  .wrapper:first-child > div {
+  .wrapper > div:first-of-type {
     display: flex;
     justify-content: space-around; }
-    .wrapper:first-child > div > div:nth-child(2) {
+    .wrapper > div:first-of-type > div:nth-child(2) {
       flex-grow: 3;
-      width: 60%; }
+      width: 100%; }
   .wrapper button {
     border-radius: 5px;
     background-color: #008cff;

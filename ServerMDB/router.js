@@ -11,18 +11,12 @@ exports.handleRequest = function (request, response) {
     
     console.log('Request at: ', url);
     
-<<<<<<< HEAD
-    let userInfo = headers['authkey'];
-    console.log(headers);
-    if (!userInfo) userInfo = security.encrypt(JSON.stringify({username: '', password: ''}));
-=======
     let userInfo = headers['auth-key'];
 
     if (!userInfo || userInfo == 'undefined') 
     {
         userInfo = security.encrypt(JSON.stringify({username: '', password: ''}));
     }
->>>>>>> 5710ed766aa85f7d721ab3c05f064b8126e14891
     
     let checkAuth = false;
     

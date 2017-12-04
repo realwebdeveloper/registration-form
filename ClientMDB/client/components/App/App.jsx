@@ -12,6 +12,21 @@ export default class App extends Component {
     this.getServerData();
     this.redirect();
   }
+  render() {
+    return (
+      <div className='page'>
+        <div>
+          <button onClick={this.logOut}>Log out</button>
+        </div>
+        <div>
+          <Form addUserInfo={this._addUserInfo}/>
+          <Table 
+          listUserInfo = {this.state.listUserInfo}
+          />
+        </div>
+      </div>
+    );
+  }
   redirect = () => {
     let xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
@@ -28,20 +43,6 @@ export default class App extends Component {
     xhr.open("GET", "http://localhost:8080/redirect");
     xhr.setRequestHeader("auth-key", localStorage.authKey);
     xhr.send();
-  }
-  render() {
-    return (
-      <div className='page'>
-        <div>
-          <button onClick={this.logOut}>Log out</button>
-        </div>
-        <Form addUserInfo={this._addUserInfo}/>
-        <Table 
-          listUserInfo = {this.state.listUserInfo}
-        />
-         {/* <button onClick={this.getServerData}>GET</button> */}
-      </div>
-    );
   }
   _addUserInfo = (userInfo) => {
     let newListUserInfo = this.state.listUserInfo.map((user, index) => {
