@@ -28,6 +28,7 @@ export default class UploadImage extends Component {
     );
   }
   _changeHandle = (e) => {
+    debugger
     let img = window.URL.createObjectURL(e.target.files[0]);
     this.setState({
       src: img,
