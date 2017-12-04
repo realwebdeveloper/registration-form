@@ -31,7 +31,7 @@ export default class Login extends React.Component {
         })
 
         xhr.open("GET", "http://localhost:8080/redirect");
-        xhr.setRequestHeader("authKey", localStorage.authKey);
+        xhr.setRequestHeader("auth-key", localStorage.authKey);
         xhr.send();
     }
     render() {
@@ -93,7 +93,7 @@ export default class Login extends React.Component {
             else 
             {
               localStorage.setItem('authKey', this.responseText);
-                alert('Loged in successfully');
+              alert('Loged in successfully');
               redirect();
             }
         }

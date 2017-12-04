@@ -18427,7 +18427,7 @@ var App = function (_Component) {
       });
 
       xhr.open("GET", "http://localhost:8080/redirect");
-      xhr.setRequestHeader("authKey", localStorage.authKey);
+      xhr.setRequestHeader("auth-key", localStorage.authKey);
       xhr.send();
     };
 
@@ -18450,10 +18450,9 @@ var App = function (_Component) {
       xhr.withCredentials = true;
 
       xhr.addEventListener("readystatechange", function () {
-        console.log(this.readyState);
-        if (this.readyState === 1) {
+        if (this.readyState === 4) {
           location.reload();
-          getServerData();
+          // getServerData();
         }
       });
 
@@ -18463,14 +18462,12 @@ var App = function (_Component) {
     };
 
     _this.updateListUserInfo = function (data) {
-      debugger;
       _this.setState({
         listUserInfo: data
       });
     };
 
     _this.getServerData = function () {
-      debugger;
       var updateListUserInfo = _this.updateListUserInfo;
 
       var xhr = new XMLHttpRequest();

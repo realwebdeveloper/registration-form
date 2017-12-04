@@ -18438,7 +18438,7 @@ var SignUp = function (_React$Component) {
             });
 
             xhr.open("GET", "http://localhost:8080/redirect");
-            xhr.setRequestHeader("authKey", localStorage.authKey);
+            xhr.setRequestHeader("auth-key", localStorage.authKey);
             xhr.send();
         };
 
@@ -18484,7 +18484,7 @@ var SignUp = function (_React$Component) {
             xhr.withCredentials = true;
             debugger;
             xhr.addEventListener("readystatechange", function () {
-                if (this.readyState === 1) {
+                if (this.readyState === 4) {
                     if (xhr.status === 400) handleStatus(1);else handleStatus(2);
                 }
             });

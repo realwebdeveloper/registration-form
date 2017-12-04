@@ -26,7 +26,7 @@ export default class App extends Component {
     })
 
     xhr.open("GET", "http://localhost:8080/redirect");
-    xhr.setRequestHeader("authKey", localStorage.authKey);
+    xhr.setRequestHeader("auth-key", localStorage.authKey);
     xhr.send();
   }
   render() {
@@ -59,10 +59,9 @@ export default class App extends Component {
     xhr.withCredentials = true;
 
     xhr.addEventListener("readystatechange", function () {
-      console.log(this.readyState);
-      if (this.readyState === 1) {
+      if (this.readyState === 4) {
         location.reload();
-        getServerData();
+        // getServerData();
       }
     })
 
@@ -71,13 +70,11 @@ export default class App extends Component {
     xhr.send(JSON.stringify(data));
   }
   updateListUserInfo = (data) => {
-    debugger
     this.setState({
       listUserInfo: data
     })
   }
   getServerData = () => {
-    debugger
     let updateListUserInfo = this.updateListUserInfo;
 
     let xhr = new XMLHttpRequest();
