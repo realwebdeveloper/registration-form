@@ -1,11 +1,11 @@
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-//   template: './client/index.html',
-//   filename: 'index.html',
-//   inject: 'body'
-// })
+const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+  template: './client/index.html',
+  filename: 'index.html',
+  inject: 'body'
+})
 
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const extractSass = new ExtractTextPlugin({
@@ -15,13 +15,11 @@ const extractSass = new ExtractTextPlugin({
 
 module.exports = {
   entry: {
-    registration: './client/registration.js',
-    login: './client/login',
-    signup: './client/signup'
+    index: './client/index.js'
   },
   output: {
     path: path.resolve('dist'),
-    filename: '[name].bundle.js'
+    filename: 'index.bundle.js'
   },
   module: {
     loaders: [
@@ -41,24 +39,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin ({
-      title: 'Registration Form',
-      template: './client/index.html',
-      chunks: ['registration'],
-      filename: 'registration.html'
-    }),
-    new HtmlWebpackPlugin({
-      title: 'Login',
-      template: './client/index.html',
-      chunks: ['login'],
-      filename: 'login.html'
-    }),
-    new HtmlWebpackPlugin({
-      title: 'Sign Up',
-      template: './client/index.html',
-      chunks: ['signup'],
-      filename: 'signup.html'
-    }),
     extractSass
   ]
 }

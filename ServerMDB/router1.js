@@ -3,25 +3,14 @@ const path = require('path')
 const security = require('./security')
 const app = express()
 const staticPath = '../ClientMDB/dist';
-
-
-app.use('/', (req, res, next) => {
-  let url = req.url;
-  let pos = url.indexOf('.')
-  let pos2 = url.indexOf('api')
-  if (pos == -1 && pos2 == -1) {
-    console.log(path.join(__dirname, staticPath, url) + '.html')
-    res.sendFile(path.join(__dirname, staticPath, url) + '.html')
-  }
-  next();
-})
+const api = require('./apiRouter');
 
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, staticPath, '/login.html'))
+  res.sendFile(path.join(__dirname, staticPath, '/index.html'))
 })
 
-app.get('/api/redirect', (req, res) => {
+app.get('/redirect', (req, res) => {
   let userInfo = headers['auth-key'];
   if (!userInfo || userInfo == 'undefined') 
   {
@@ -58,4 +47,6 @@ app.get('/api/redirect', (req, res) => {
 
 app.use('/', express.static(path.join(__dirname, staticPath)))
 
-app.listen(8080, () => console.log('Server is starting'))
+app.use('/api', api);
+
+app.listen(8080, () => {'Server running on port 8080'});
