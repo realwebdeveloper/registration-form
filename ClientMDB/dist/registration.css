@@ -13,7 +13,7 @@
 
 .Input div {
   display: inline-block;
-  width: 30%;
+  width: 20%;
   height: 15px;
   text-align: right;
   font-weight: bold;
@@ -31,7 +31,7 @@
   line-height: 40px; }
   .Select label {
     display: inline-block;
-    width: 30%;
+    width: 20%;
     height: 15px;
     text-align: right;
     font-weight: bold;
@@ -42,10 +42,10 @@
     left: 5px;
     width: 65%; }
   .Select div {
-    height: 15px; }
+    height: 30px; }
 .Choice > label:first-of-type {
   display: inline-block;
-  width: 30%;
+  width: 20%;
   height: 15px;
   text-align: right;
   font-weight: bold; }
@@ -71,7 +71,7 @@
 
 .Choice > div:nth-of-type(2) {
   display: inline-block;
-  width: 30%;
+  width: 20%;
   height: 15px;
   text-align: right;
   font-weight: bold;

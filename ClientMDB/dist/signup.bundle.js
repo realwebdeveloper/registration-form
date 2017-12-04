@@ -18467,6 +18467,7 @@ var SignUp = function (_React$Component) {
         _this.handleStatus = function (status) {
             var message = 'Registered Successfully';
             if (status === 1) message = 'Username existed';
+            console.log(status);
             _this.setState({
                 status: message
             });
@@ -18484,7 +18485,7 @@ var SignUp = function (_React$Component) {
             xhr.withCredentials = true;
             debugger;
             xhr.addEventListener("readystatechange", function () {
-                if (this.readyState === 1) {
+                if (this.readyState === 4) {
                     if (xhr.status === 400) handleStatus(1);else handleStatus(2);
                 }
             });

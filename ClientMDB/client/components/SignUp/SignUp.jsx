@@ -102,6 +102,7 @@ export default class SignUp extends React.Component {
     handleStatus = (status) => {
         let message = 'Registered Successfully';
         if (status === 1) message = 'Username existed';
+        console.log(status);
         this.setState({
             status: message
         })
@@ -118,7 +119,7 @@ export default class SignUp extends React.Component {
         xhr.withCredentials = true;
         debugger
         xhr.addEventListener("readystatechange", function () {
-            if (this.readyState === 1) {
+            if (this.readyState === 4) {
                 if (xhr.status === 400) handleStatus(1);
                 else handleStatus(2);
             }

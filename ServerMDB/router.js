@@ -11,7 +11,7 @@ exports.handleRequest = function (request, response) {
     
     console.log('Request at: ', url);
     
-    let userInfo = headers['auth-key'];
+    let userInfo = headers['authkey'];
     console.log(headers);
     if (!userInfo) userInfo = security.encrypt(JSON.stringify({username: '', password: ''}));
     
@@ -102,6 +102,7 @@ exports.handleRequest = function (request, response) {
                                         database.insert('peopleList', json);
                                     });
                                     break;
+                                    response.end();
                                 case 'signup':
                                     var body = '';
                                     var json = {};
@@ -114,7 +115,9 @@ exports.handleRequest = function (request, response) {
                                         console.log(userAccount);
                                         console.log(json);
                                         delete userAccount.password;
+                                        console.log(userAccount);
                                         database.findOne('accounts',userAccount, function(found){
+                                            console.log(userAccount);
                                             if (found) {
                                                 response.writeHead(400);
                                             }

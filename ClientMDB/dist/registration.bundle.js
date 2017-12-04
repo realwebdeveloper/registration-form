@@ -18451,14 +18451,13 @@ var App = function (_Component) {
 
       xhr.addEventListener("readystatechange", function () {
         console.log(this.readyState);
-        if (this.readyState === 1) {
+        if (this.readyState === 4) {
           location.reload();
           getServerData();
         }
       });
 
       xhr.open("POST", "http://localhost:8080/api/uploadUserInfo");
-      xhr.setRequestHeader("accept", "application/json");
       xhr.send(JSON.stringify(data));
     };
 
