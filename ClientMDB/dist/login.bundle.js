@@ -18434,7 +18434,7 @@ var Login = function (_React$Component) {
                 }
             });
 
-            xhr.open("GET", "http://localhost:8080/redirect");
+            xhr.open("GET", "http://localhost:8080/api/redirect");
             xhr.setRequestHeader("auth-key", localStorage.authKey);
             xhr.send();
         };

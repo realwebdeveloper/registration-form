@@ -104,7 +104,7 @@ export default class Form extends Component {
     let xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
 
-    xhr.open("GET", "http://localhost:8080/redirect");
+    xhr.open("GET", "http://localhost:8080/api/redirect");
     xhr.setRequestHeader("auth-key", localStorage.authKey);
     xhr.send();
   }

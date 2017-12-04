@@ -18426,7 +18426,7 @@ var App = function (_Component) {
         }
       });
 
-      xhr.open("GET", "http://localhost:8080/redirect");
+      xhr.open("GET", "http://localhost:8080/api/redirect");
       xhr.setRequestHeader("auth-key", localStorage.authKey);
       xhr.send();
     };
@@ -18582,7 +18582,7 @@ var Form = function (_Component) {
       var xhr = new XMLHttpRequest();
       xhr.withCredentials = true;
 
-      xhr.open("GET", "http://localhost:8080/redirect");
+      xhr.open("GET", "http://localhost:8080/api/redirect");
       xhr.setRequestHeader("auth-key", localStorage.authKey);
       xhr.send();
     };
