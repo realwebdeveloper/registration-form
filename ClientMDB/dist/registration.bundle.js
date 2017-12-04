@@ -18583,7 +18583,7 @@ var Form = function (_Component) {
       xhr.withCredentials = true;
 
       xhr.open("GET", "http://localhost:8080/redirect");
-      xhr.setRequestHeader("auth-key", localStorage.authKey);
+      xhr.setRequestHeader("authKey", localStorage.authKey);
       xhr.send();
     };
 
@@ -18957,6 +18957,7 @@ var UploadImage = function (_Component) {
     var _this = _possibleConstructorReturn(this, (UploadImage.__proto__ || Object.getPrototypeOf(UploadImage)).call(this, props));
 
     _this._changeHandle = function (e) {
+      debugger;
       var img = window.URL.createObjectURL(e.target.files[0]);
       _this.setState({
         src: img,
