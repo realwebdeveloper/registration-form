@@ -18481,6 +18481,10 @@ var Login = function (_React$Component) {
             xhr.send();
         };
 
+        _this.signUp = function () {
+            window.location.replace('http://localhost:8080/signup');
+        };
+
         _this.state = {
             info: {
                 username: '',
@@ -18529,9 +18533,18 @@ var Login = function (_React$Component) {
                     this.state.status
                 ),
                 _react2.default.createElement(
-                    'button',
-                    { onClick: this.login },
-                    'Log In'
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: this.login },
+                        'Log In'
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: this.signUp },
+                        'Sign Up'
+                    )
                 )
             );
         }

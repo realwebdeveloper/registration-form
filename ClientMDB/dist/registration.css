@@ -151,3 +151,5 @@
     width: 50px; }
 .page {
   display: block; }
+  .page > div:first-child {
+    text-align: right; }

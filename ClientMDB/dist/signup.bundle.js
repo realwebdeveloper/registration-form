@@ -18493,6 +18493,10 @@ var SignUp = function (_React$Component) {
             xhr.send(JSON.stringify(userInfo));
         };
 
+        _this.login = function () {
+            window.location.replace('http://localhost:8080/login');
+        };
+
         _this.state = {
             info: {
                 username: '',
@@ -18556,9 +18560,18 @@ var SignUp = function (_React$Component) {
                     this.state.status
                 ),
                 _react2.default.createElement(
-                    'button',
-                    { onClick: this.submit },
-                    'Sign Up'
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: this.submit },
+                        'Sign Up'
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: this.login },
+                        'Log In'
+                    )
                 )
             );
         }

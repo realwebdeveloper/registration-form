@@ -18432,7 +18432,6 @@ var App = function (_Component) {
     };
 
     _this._addUserInfo = function (userInfo) {
-      debugger;
       var newListUserInfo = _this.state.listUserInfo.map(function (user, index) {
         return user;
       });
@@ -18443,7 +18442,6 @@ var App = function (_Component) {
     };
 
     _this.pushToServer = function (data) {
-      debugger;
       var getServerData = _this.getServerData;
 
       var xhr = new XMLHttpRequest();
@@ -18503,6 +18501,15 @@ var App = function (_Component) {
       return _react2.default.createElement(
         'div',
         { className: 'page' },
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'button',
+            { onClick: this.logOut },
+            'Log out'
+          )
+        ),
         _react2.default.createElement(_Form2.default, { addUserInfo: this._addUserInfo }),
         _react2.default.createElement(_Table2.default, {
           listUserInfo: this.state.listUserInfo

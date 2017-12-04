@@ -75,7 +75,10 @@ export default class SignUp extends React.Component {
                 {(this.state.status != '') &&
                     <p>{this.state.status}</p>
                 }
-                <button onClick = {this.submit}>Sign Up</button>
+                <div>
+                    <button onClick = {this.submit}>Sign Up</button>
+                    <button onClick={this.login} >Log In</button>
+                </div>
             </div>
         );
     }
@@ -126,5 +129,8 @@ export default class SignUp extends React.Component {
 
         xhr.open("POST", "http://localhost:8080/api/signup");
         xhr.send(JSON.stringify(userInfo));
+    }
+    login = () => {
+        window.location.replace('http://localhost:8080/login')
     }
 }

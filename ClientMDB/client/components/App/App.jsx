@@ -32,7 +32,9 @@ export default class App extends Component {
   render() {
     return (
       <div className='page'>
-        {/* <button onClick={this.logOut}>Log out</button> */}
+        <div>
+          <button onClick={this.logOut}>Log out</button>
+        </div>
         <Form addUserInfo={this._addUserInfo}/>
         <Table 
           listUserInfo = {this.state.listUserInfo}
@@ -42,7 +44,6 @@ export default class App extends Component {
     );
   }
   _addUserInfo = (userInfo) => {
-    debugger
     let newListUserInfo = this.state.listUserInfo.map((user, index) => {
       return user;
     })
@@ -52,7 +53,6 @@ export default class App extends Component {
     this.pushToServer(userInfo.info)
   }
   pushToServer = (data) => {
-    debugger
     let getServerData = this.getServerData;
 
     var xhr = new XMLHttpRequest();

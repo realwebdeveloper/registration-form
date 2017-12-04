@@ -59,7 +59,10 @@ export default class Login extends React.Component {
                 {(this.state.status != '') &&
                   <p>{this.state.status}</p>
                 }
-                <button onClick = {this.login} >Log In</button>
+                <div>
+                    <button onClick = {this.login} >Log In</button>
+                    <button onClick = {this.signUp} >Sign Up</button>
+                </div>
             </div>
         );
     }
@@ -103,5 +106,8 @@ export default class Login extends React.Component {
       xhr.setRequestHeader('username', info.username);
       xhr.setRequestHeader('password', info.password);
       xhr.send();
+    }
+    signUp = () => {
+        window.location.replace('http://localhost:8080/signup');
     }
 }
