@@ -26,13 +26,15 @@ export default class App extends Component {
     })
 
     xhr.open("GET", "http://localhost:8080/redirect");
-    xhr.setRequestHeader("authKey", localStorage.authKey);
+    xhr.setRequestHeader("auth-key", localStorage.authKey);
     xhr.send();
   }
   render() {
     return (
       <div className='page'>
-        {/* <button onClick={this.logOut}>Log out</button> */}
+        <div>
+          <button onClick={this.logOut}>Log out</button>
+        </div>
         <Form addUserInfo={this._addUserInfo}/>
         <Table 
           listUserInfo = {this.state.listUserInfo}
@@ -42,7 +44,6 @@ export default class App extends Component {
     );
   }
   _addUserInfo = (userInfo) => {
-    debugger
     let newListUserInfo = this.state.listUserInfo.map((user, index) => {
       return user;
     })
@@ -52,7 +53,6 @@ export default class App extends Component {
     this.pushToServer(userInfo.info)
   }
   pushToServer = (data) => {
-    debugger
     let getServerData = this.getServerData;
 
     var xhr = new XMLHttpRequest();
@@ -62,7 +62,7 @@ export default class App extends Component {
       console.log(this.readyState);
       if (this.readyState === 4) {
         location.reload();
-        getServerData();
+        // getServerData();
       }
     })
 
@@ -70,13 +70,11 @@ export default class App extends Component {
     xhr.send(JSON.stringify(data));
   }
   updateListUserInfo = (data) => {
-    debugger
     this.setState({
       listUserInfo: data
     })
   }
   getServerData = () => {
-    debugger
     let updateListUserInfo = this.updateListUserInfo;
 
     let xhr = new XMLHttpRequest();

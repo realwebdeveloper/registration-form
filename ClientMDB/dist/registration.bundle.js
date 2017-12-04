@@ -18427,12 +18427,11 @@ var App = function (_Component) {
       });
 
       xhr.open("GET", "http://localhost:8080/redirect");
-      xhr.setRequestHeader("authKey", localStorage.authKey);
+      xhr.setRequestHeader("auth-key", localStorage.authKey);
       xhr.send();
     };
 
     _this._addUserInfo = function (userInfo) {
-      debugger;
       var newListUserInfo = _this.state.listUserInfo.map(function (user, index) {
         return user;
       });
@@ -18443,17 +18442,19 @@ var App = function (_Component) {
     };
 
     _this.pushToServer = function (data) {
-      debugger;
       var getServerData = _this.getServerData;
 
       var xhr = new XMLHttpRequest();
       xhr.withCredentials = true;
 
       xhr.addEventListener("readystatechange", function () {
+<<<<<<< HEAD
         console.log(this.readyState);
+=======
+>>>>>>> 5710ed766aa85f7d721ab3c05f064b8126e14891
         if (this.readyState === 4) {
           location.reload();
-          getServerData();
+          // getServerData();
         }
       });
 
@@ -18462,14 +18463,12 @@ var App = function (_Component) {
     };
 
     _this.updateListUserInfo = function (data) {
-      debugger;
       _this.setState({
         listUserInfo: data
       });
     };
 
     _this.getServerData = function () {
-      debugger;
       var updateListUserInfo = _this.updateListUserInfo;
 
       var xhr = new XMLHttpRequest();
@@ -18505,6 +18504,15 @@ var App = function (_Component) {
       return _react2.default.createElement(
         'div',
         { className: 'page' },
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'button',
+            { onClick: this.logOut },
+            'Log out'
+          )
+        ),
         _react2.default.createElement(_Form2.default, { addUserInfo: this._addUserInfo }),
         _react2.default.createElement(_Table2.default, {
           listUserInfo: this.state.listUserInfo

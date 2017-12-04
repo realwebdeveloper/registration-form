@@ -18438,7 +18438,7 @@ var SignUp = function (_React$Component) {
             });
 
             xhr.open("GET", "http://localhost:8080/redirect");
-            xhr.setRequestHeader("authKey", localStorage.authKey);
+            xhr.setRequestHeader("auth-key", localStorage.authKey);
             xhr.send();
         };
 
@@ -18492,6 +18492,10 @@ var SignUp = function (_React$Component) {
 
             xhr.open("POST", "http://localhost:8080/api/signup");
             xhr.send(JSON.stringify(userInfo));
+        };
+
+        _this.login = function () {
+            window.location.replace('http://localhost:8080/login');
         };
 
         _this.state = {
@@ -18557,9 +18561,18 @@ var SignUp = function (_React$Component) {
                     this.state.status
                 ),
                 _react2.default.createElement(
-                    'button',
-                    { onClick: this.submit },
-                    'Sign Up'
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: this.submit },
+                        'Sign Up'
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: this.login },
+                        'Log In'
+                    )
                 )
             );
         }

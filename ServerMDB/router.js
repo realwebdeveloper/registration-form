@@ -11,14 +11,23 @@ exports.handleRequest = function (request, response) {
     
     console.log('Request at: ', url);
     
+<<<<<<< HEAD
     let userInfo = headers['authkey'];
     console.log(headers);
     if (!userInfo) userInfo = security.encrypt(JSON.stringify({username: '', password: ''}));
+=======
+    let userInfo = headers['auth-key'];
+
+    if (!userInfo || userInfo == 'undefined') 
+    {
+        userInfo = security.encrypt(JSON.stringify({username: '', password: ''}));
+    }
+>>>>>>> 5710ed766aa85f7d721ab3c05f064b8126e14891
     
     let checkAuth = false;
     
     userInfo = security.decrypt(userInfo);
-    console.log(userInfo);
+
     database.findOne('accounts',JSON.parse(userInfo), (found) => {
         checkAuth = found;
 
@@ -28,7 +37,6 @@ exports.handleRequest = function (request, response) {
                 reqUrl = reqUrl.slice(reqUrl.lastIndexOf('/'));
                 console.log('Redirect from: ' + reqUrl);
                 if (checkAuth) {
-                    console.log(1);
                     if (reqUrl != '/registration') {
                         response.writeHead(403);
                         response.end();
@@ -65,19 +73,14 @@ exports.handleRequest = function (request, response) {
                                     let username = headers.username;
                                     let password = headers.password;
                                     let userinfo = { username: username, password: password };
-                                    console.log('Request log in as ' + userinfo.username);
                                     database.findOne('accounts', userinfo, (found) => {
                                         let checkLogin = found;
                                         if (checkLogin) {
                                             response.writeHead(200);
-                                            console.log('Authkey is: ' + security.encrypt(JSON.stringify(userinfo)));
                                             response.write(security.encrypt(JSON.stringify(userinfo)), () => { response.end(); })
                                         }
                                         else {
-                                            // response.writeHead(401);
-                                            response.statusCode = 401;
-                                            console.log(response);
-                                            console.log('Log in failed');
+                                            response.writeHead(401);
                                             response.end();
                                         }
                                     });
@@ -100,6 +103,7 @@ exports.handleRequest = function (request, response) {
                                     request.on('end', function () {
                                         json = JSON.parse(body);
                                         database.insert('peopleList', json);
+                                        response.end();
                                     });
                                     break;
                                     response.end();
@@ -112,8 +116,6 @@ exports.handleRequest = function (request, response) {
                                     request.on('end', function() {
                                         json = JSON.parse(body);
                                         let userAccount = JSON.parse(body);
-                                        console.log(userAccount);
-                                        console.log(json);
                                         delete userAccount.password;
                                         console.log(userAccount);
                                         database.findOne('accounts',userAccount, function(found){
@@ -122,7 +124,6 @@ exports.handleRequest = function (request, response) {
                                                 response.writeHead(400);
                                             }
                                             else {
-                                                console.log(json);
                                                 database.insert('accounts',json);
                                                 database.queryAll('accounts', () => {});
                                             }
@@ -148,14 +149,6 @@ exports.handleRequest = function (request, response) {
                     if (method === 'GET') {
                         switch (url) {
                             case "/":
-                                // if (checkAuth) {
-                                //   response.writeHead(301, {Location: '/registration'});
-                                //   response.end();
-                                // }
-                                // else {
-                                //   response.writeHead(301, {Location: '/login'});
-                                //   response.end();
-                                // }
                                 response.writeHead(301, { Location: '/login' });
                                 response.end();
                                 break;
@@ -164,26 +157,12 @@ exports.handleRequest = function (request, response) {
                                 var resolvedBase = path.resolve(staticBasePath);
                                 var safeSuffix = path.normalize(url).replace(/^(\.\.[\/\\])+/, '');
                                 var fileLoc = path.join(resolvedBase, safeSuffix);
-                                // if (checkAuth) {
-                                //   if (url == '/login.html' || url == '/signup.html') {
-                                //     response.writeHead(301, {Location: '/registration'});
-                                //     response.end();
-                                //     break;
-                                //   }
-                                // } else {
-                                //   if (url == '/registration.html'){
-                                //     response.writeHead(301, {Location: '/login'});
-                                //     response.end();
-                                //     break;
-                                //   }
-                                // }
                                 fs.readFile(fileLoc, function (error, pageRes) {
                                     if (error) {
                                         response.writeHead(404);
                                         response.write('Contents you are looking are Not Found');
                                     }
                                     else {
-                                        // response.writeHead(200, { 'Content-Type': 'text/javascript' });
                                         response.writeHead(200);
                                         response.write(pageRes);
                                     }
