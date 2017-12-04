@@ -27,6 +27,7 @@ exports.queryAll = function(dbName, callback) {
 
             collection.find().toArray(function (err, items) {
                 if (err) throw err;
+                console.log(items);
                 callback(JSON.stringify(items));
             });
         });

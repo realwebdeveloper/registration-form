@@ -18419,6 +18419,7 @@ var App = function (_Component) {
 
       xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
+          debugger;
           if (xhr.status == 403) {
             window.location.replace('http://localhost:8080/login');
           }

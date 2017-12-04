@@ -102,7 +102,6 @@ export default class SignUp extends React.Component {
     handleStatus = (status) => {
         let message = 'Registered Successfully';
         if (status === 1) message = 'Username existed';
-        if (status === 1) 
         this.setState({
             status: message
         })
@@ -111,13 +110,13 @@ export default class SignUp extends React.Component {
         let handleStatus = this.handleStatus;
         if (!this.checkValidate()) return;
         let userInfo = {
-            username: this.state.userInfo.username,
-            password: this.state.userInfo.password1
+            username: this.state.info.username,
+            password: this.state.info.password1
         };
 
         var xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
-
+        debugger
         xhr.addEventListener("readystatechange", function () {
             if (this.readyState === 1) {
                 if (xhr.status === 400) handleStatus(1);
@@ -125,7 +124,7 @@ export default class SignUp extends React.Component {
             }
         });
 
-        xhr.open("POST", "http://localhost/8080/api/signup");
+        xhr.open("POST", "http://localhost:8080/api/signup");
         xhr.send(JSON.stringify(userInfo));
     }
 }

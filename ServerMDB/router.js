@@ -11,14 +11,14 @@ exports.handleRequest = function (request, response) {
     
     console.log('Request at: ', url);
     
-    let userInfo = headers.authKey;
-
+    let userInfo = headers['auth-key'];
+    console.log(headers);
     if (!userInfo) userInfo = security.encrypt(JSON.stringify({username: '', password: ''}));
     
     let checkAuth = false;
     
     userInfo = security.decrypt(userInfo);
-
+    console.log(userInfo);
     database.findOne('accounts',JSON.parse(userInfo), (found) => {
         checkAuth = found;
 
@@ -71,16 +71,16 @@ exports.handleRequest = function (request, response) {
                                         if (checkLogin) {
                                             response.writeHead(200);
                                             console.log('Authkey is: ' + security.encrypt(JSON.stringify(userinfo)));
-                                            response.write(security.encrypt(JSON.stringify(userinfo)))
+                                            response.write(security.encrypt(JSON.stringify(userinfo)), () => { response.end(); })
                                         }
                                         else {
                                             // response.writeHead(401);
                                             response.statusCode = 401;
                                             console.log(response);
                                             console.log('Log in failed');
+                                            response.end();
                                         }
                                     });
-                                    response.end();
                                     break;
                                 default:
                                     response.writeHead(404);
@@ -110,16 +110,18 @@ exports.handleRequest = function (request, response) {
                                     })
                                     request.on('end', function() {
                                         json = JSON.parse(body);
-                                        let userAccount = json;
+                                        let userAccount = JSON.parse(body);
                                         console.log(userAccount);
+                                        console.log(json);
                                         delete userAccount.password;
                                         database.findOne('accounts',userAccount, function(found){
                                             if (found) {
                                                 response.writeHead(400);
                                             }
                                             else {
-                                                response.writeHead(200);
+                                                console.log(json);
                                                 database.insert('accounts',json);
+                                                database.queryAll('accounts', () => {});
                                             }
                                             response.end();
                                         })
