@@ -62,7 +62,7 @@ export default class Login extends React.Component {
                 <div>
                     <button onClick = {this.login} >Log In</button>
                     <button onClick = {this.signUp} >Sign Up</button>
-                </div>
+                </div>                
             </div>
         );
     }
