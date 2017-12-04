@@ -105,7 +105,7 @@ export default class Form extends Component {
     xhr.withCredentials = true;
 
     xhr.open("GET", "http://localhost:8080/redirect");
-    xhr.setRequestHeader("authKey", localStorage.authKey);
+    xhr.setRequestHeader("auth-key", localStorage.authKey);
     xhr.send();
   }
   _changHandle = (property, value, validate) => {
