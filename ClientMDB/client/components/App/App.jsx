@@ -10,20 +10,41 @@ export default class App extends Component {
       listUserInfo: []
     }
     this.getServerData();
+    this.redirect();
   }
   render() {
     return (
       <div className='page'>
-        <Form addUserInfo={this._addUserInfo}/>
-        <Table 
+        <div>
+          <button onClick={this.logOut}>Log out</button>
+        </div>
+        <div>
+          <Form addUserInfo={this._addUserInfo}/>
+          <Table 
           listUserInfo = {this.state.listUserInfo}
-        />
-         {/* <button onClick={this.getServerData}>GET</button> */}
+          />
+        </div>
       </div>
     );
   }
+  redirect = () => {
+    let xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+      if (this.readyState === 4) {
+        debugger
+        if (xhr.status == 403) {
+          window.location.replace('http://localhost:8080/login');
+        }
+      }
+    })
+
+    xhr.open("GET", "http://localhost:8080/redirect");
+    xhr.setRequestHeader("auth-key", localStorage.authKey);
+    xhr.send();
+  }
   _addUserInfo = (userInfo) => {
-    debugger
     let newListUserInfo = this.state.listUserInfo.map((user, index) => {
       return user;
     })
@@ -33,7 +54,6 @@ export default class App extends Component {
     this.pushToServer(userInfo.info)
   }
   pushToServer = (data) => {
-    debugger
     let getServerData = this.getServerData;
 
     var xhr = new XMLHttpRequest();
@@ -41,24 +61,21 @@ export default class App extends Component {
 
     xhr.addEventListener("readystatechange", function () {
       console.log(this.readyState);
-      if (this.readyState === 1) {
+      if (this.readyState === 4) {
         location.reload();
-        getServerData();
+        // getServerData();
       }
     })
 
     xhr.open("POST", "http://localhost:8080/api/uploadUserInfo");
-    xhr.setRequestHeader("accept", "application/json");
     xhr.send(JSON.stringify(data));
   }
   updateListUserInfo = (data) => {
-    debugger
     this.setState({
       listUserInfo: data
     })
   }
   getServerData = () => {
-    debugger
     let updateListUserInfo = this.updateListUserInfo;
 
     let xhr = new XMLHttpRequest();
@@ -73,5 +90,9 @@ export default class App extends Component {
     xhr.open("GET", "http://localhost:8080/api/ListUserInfo");
     xhr.setRequestHeader("accept", "application/json");
     xhr.send();
+  }
+  logOut = () => {
+    localStorage.removeItem('authKey');
+    this.redirect();
   }
 }

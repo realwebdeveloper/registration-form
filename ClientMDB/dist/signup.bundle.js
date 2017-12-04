@@ -18268,7 +18268,6 @@ var Input = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
 
     _this._changeHandle = function (label, e) {
-      debugger;
       var newValue = e.target.value;
       var newMessage = "";
       var newValidate = true;
@@ -18426,6 +18425,23 @@ var SignUp = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (SignUp.__proto__ || Object.getPrototypeOf(SignUp)).call(this, props));
 
+        _this.redirect = function () {
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
+                    if (xhr.status == 403) {
+                        window.location.replace('http://localhost:8080/registration');
+                    }
+                }
+            });
+
+            xhr.open("GET", "http://localhost:8080/redirect");
+            xhr.setRequestHeader("auth-key", localStorage.authKey);
+            xhr.send();
+        };
+
         _this._changHandle = function (property, value, validate) {
             var newInfo = JSON.parse(JSON.stringify(_this.state.info));
             var newValidate = JSON.parse(JSON.stringify(_this.state.validate));
@@ -18435,6 +18451,51 @@ var SignUp = function (_React$Component) {
                 info: newInfo,
                 validate: newValidate
             });
+        };
+
+        _this.checkValidate = function () {
+            var validate = _this.state.validate;
+            var info = _this.state.info;
+
+            for (var key in validate) {
+                if (!validate[key]) return false;
+            }
+            if (info.password1 != info.password2) return false;
+            return true;
+        };
+
+        _this.handleStatus = function (status) {
+            var message = 'Registered Successfully';
+            if (status === 1) message = 'Username existed';
+            console.log(status);
+            _this.setState({
+                status: message
+            });
+        };
+
+        _this.submit = function () {
+            var handleStatus = _this.handleStatus;
+            if (!_this.checkValidate()) return;
+            var userInfo = {
+                username: _this.state.info.username,
+                password: _this.state.info.password1
+            };
+
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+            debugger;
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
+                    if (xhr.status === 400) handleStatus(1);else handleStatus(2);
+                }
+            });
+
+            xhr.open("POST", "http://localhost:8080/api/signup");
+            xhr.send(JSON.stringify(userInfo));
+        };
+
+        _this.login = function () {
+            window.location.replace('http://localhost:8080/login');
         };
 
         _this.state = {
@@ -18447,8 +18508,10 @@ var SignUp = function (_React$Component) {
                 username: false,
                 password1: false,
                 password2: false
-            }
+            },
+            status: ''
         };
+        _this.redirect();
         return _this;
     }
 
@@ -18467,7 +18530,7 @@ var SignUp = function (_React$Component) {
                     type: 'text',
                     label: 'Username',
                     property: 'username',
-                    validateAndMessage: [{ regExp: '^.{0,7}$', message: 'Your name is at least 8 character', valid: false }],
+                    validateAndMessage: [{ regExp: '^.{0,5}$', message: 'Your name is at least 6 character', valid: false }],
                     changeHandle: this._changHandle,
                     validate: this.state.validate.username
                 }),
@@ -18475,7 +18538,7 @@ var SignUp = function (_React$Component) {
                     type: 'password',
                     label: 'Password',
                     property: 'password1',
-                    validateAndMessage: [{ regExp: '^.{0,7}$', message: 'Your password is at least 6 characters', valid: false }],
+                    validateAndMessage: [{ regExp: '^.{0,5}$', message: 'Your password is at least 6 characters', valid: false }],
                     changeHandle: this._changHandle,
                     validate: this.state.validate.password1
                 }),
@@ -18492,10 +18555,24 @@ var SignUp = function (_React$Component) {
                     null,
                     '2 passwords must be the same'
                 ),
-                _react2.default.createElement(
-                    'button',
+                this.state.status != '' && _react2.default.createElement(
+                    'p',
                     null,
-                    'Sign Up'
+                    this.state.status
+                ),
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: this.submit },
+                        'Sign Up'
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: this.login },
+                        'Log In'
+                    )
                 )
             );
         }

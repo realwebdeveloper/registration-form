@@ -18268,7 +18268,6 @@ var Input = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
 
     _this._changeHandle = function (label, e) {
-      debugger;
       var newValue = e.target.value;
       var newMessage = "";
       var newValidate = true;
@@ -18414,8 +18413,25 @@ var App = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
+    _this.redirect = function () {
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+          debugger;
+          if (xhr.status == 403) {
+            window.location.replace('http://localhost:8080/login');
+          }
+        }
+      });
+
+      xhr.open("GET", "http://localhost:8080/redirect");
+      xhr.setRequestHeader("auth-key", localStorage.authKey);
+      xhr.send();
+    };
+
     _this._addUserInfo = function (userInfo) {
-      debugger;
       var newListUserInfo = _this.state.listUserInfo.map(function (user, index) {
         return user;
       });
@@ -18426,7 +18442,6 @@ var App = function (_Component) {
     };
 
     _this.pushToServer = function (data) {
-      debugger;
       var getServerData = _this.getServerData;
 
       var xhr = new XMLHttpRequest();
@@ -18434,26 +18449,23 @@ var App = function (_Component) {
 
       xhr.addEventListener("readystatechange", function () {
         console.log(this.readyState);
-        if (this.readyState === 1) {
+        if (this.readyState === 4) {
           location.reload();
-          getServerData();
+          // getServerData();
         }
       });
 
       xhr.open("POST", "http://localhost:8080/api/uploadUserInfo");
-      xhr.setRequestHeader("accept", "application/json");
       xhr.send(JSON.stringify(data));
     };
 
     _this.updateListUserInfo = function (data) {
-      debugger;
       _this.setState({
         listUserInfo: data
       });
     };
 
     _this.getServerData = function () {
-      debugger;
       var updateListUserInfo = _this.updateListUserInfo;
 
       var xhr = new XMLHttpRequest();
@@ -18470,10 +18482,16 @@ var App = function (_Component) {
       xhr.send();
     };
 
+    _this.logOut = function () {
+      localStorage.removeItem('authKey');
+      _this.redirect();
+    };
+
     _this.state = {
       listUserInfo: []
     };
     _this.getServerData();
+    _this.redirect();
     return _this;
   }
 
@@ -18483,10 +18501,23 @@ var App = function (_Component) {
       return _react2.default.createElement(
         'div',
         { className: 'page' },
-        _react2.default.createElement(_Form2.default, { addUserInfo: this._addUserInfo }),
-        _react2.default.createElement(_Table2.default, {
-          listUserInfo: this.state.listUserInfo
-        })
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'button',
+            { onClick: this.logOut },
+            'Log out'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(_Form2.default, { addUserInfo: this._addUserInfo }),
+          _react2.default.createElement(_Table2.default, {
+            listUserInfo: this.state.listUserInfo
+          })
+        )
       );
     }
   }]);
@@ -18547,6 +18578,15 @@ var Form = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, props));
 
+    _this.redirect = function () {
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+
+      xhr.open("GET", "http://localhost:8080/redirect");
+      xhr.setRequestHeader("authKey", localStorage.authKey);
+      xhr.send();
+    };
+
     _this._changHandle = function (property, value, validate) {
       var newInfo = JSON.parse(JSON.stringify(_this.state.info));
       var newValidate = JSON.parse(JSON.stringify(_this.state.validate));
@@ -18580,6 +18620,7 @@ var Form = function (_Component) {
         city: true
       }
     };
+    _this.redirect();
     return _this;
   }
 

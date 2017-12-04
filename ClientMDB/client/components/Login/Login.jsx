@@ -13,7 +13,8 @@ export default class Login extends React.Component {
             validate: {
                 username: false,
                 password: false
-            }
+            },
+            status: ''
         }
         this.redirect();
     }
@@ -21,8 +22,16 @@ export default class Login extends React.Component {
         let xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
 
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                if (xhr.status == 403){
+                    window.location.replace('http://localhost:8080/registration');
+                }
+            }
+        })
+
         xhr.open("GET", "http://localhost:8080/redirect");
-        xhr.setRequestHeader("authKey", localStorage.authKey);
+        xhr.setRequestHeader("auth-key", localStorage.authKey);
         xhr.send();
     }
     render() {
@@ -47,9 +56,13 @@ export default class Login extends React.Component {
                     changeHandle={this._changHandle}
                     validate={this.state.validate.password}
                 ></Input>
-                <button
-                    onClick = {this.logins(this.state.info)}
-                >Log In</button>
+                {(this.state.status != '') &&
+                  <p>{this.state.status}</p>
+                }
+                <div>
+                    <button onClick = {this.login} >Log In</button>
+                    <button onClick = {this.signUp} >Sign Up</button>
+                </div>                
             </div>
         );
     }
@@ -62,23 +75,39 @@ export default class Login extends React.Component {
             info: newInfo,
             validate: newValidate
         });
-        this.pushToServer(this.state.info)
     }
-    pushToServer = (data) => {
-        debugger
-    
-        var xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
-    
-        xhr.addEventListener("readystatechange", function () {
-          console.log(this.readyState);
-          if (this.readyState === 1) {
-            location.reload();
-          }
-        })
-    
-        xhr.open("POST", "http://localhost:8080/api/Login");
-        xhr.setRequestHeader("accept", "application/json");
-        xhr.send(JSON.stringify(data));
-      }
+    handleStatus = () => {
+      this.setState({
+        status: 'Your username / password is incorrect'
+      })
+    }
+    login = () => {
+      var handleStatus = this.handleStatus;
+      var redirect = this.redirect;
+
+      var info = this.state.info;
+
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+      
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            if (xhr.status === 401) handleStatus();
+            else 
+            {
+              localStorage.setItem('authKey', this.responseText);
+              alert('Loged in successfully');
+              redirect();
+            }
+        }
+      });
+      
+      xhr.open("GET", "http://localhost:8080/api/login");
+      xhr.setRequestHeader('username', info.username);
+      xhr.setRequestHeader('password', info.password);
+      xhr.send();
+    }
+    signUp = () => {
+        window.location.replace('http://localhost:8080/signup');
+    }
 }

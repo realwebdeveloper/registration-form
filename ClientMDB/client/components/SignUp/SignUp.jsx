@@ -15,8 +15,26 @@ export default class SignUp extends React.Component {
                 username: false,
                 password1: false,
                 password2: false
-            }
+            },
+            status: ''
         }
+      this.redirect();
+    }
+    redirect = () => {
+        let xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                if (xhr.status == 403) {
+                    window.location.replace('http://localhost:8080/registration');
+                }
+            }
+        })
+
+        xhr.open("GET", "http://localhost:8080/redirect");
+        xhr.setRequestHeader("auth-key", localStorage.authKey);
+        xhr.send();
     }
     render() {
         return (
@@ -27,7 +45,7 @@ export default class SignUp extends React.Component {
                     label="Username"
                     property="username"
                     validateAndMessage={[
-                        { regExp: '^.{0,7}$', message: 'Your name is at least 8 character', valid: false }
+                        { regExp: '^.{0,5}$', message: 'Your name is at least 6 character', valid: false }
                     ]}
                     changeHandle={this._changHandle}
                     validate={this.state.validate.username}
@@ -37,7 +55,7 @@ export default class SignUp extends React.Component {
                     label="Password"
                     property="password1"
                     validateAndMessage={[
-                        { regExp: '^.{0,7}$', message: 'Your password is at least 6 characters', valid: false }
+                        { regExp: '^.{0,5}$', message: 'Your password is at least 6 characters', valid: false }
                     ]}
                     changeHandle={this._changHandle}
                     validate={this.state.validate.password1}
@@ -54,7 +72,13 @@ export default class SignUp extends React.Component {
                 { (this.state.info.password1 != this.state.info.password2) && 
                     <p>2 passwords must be the same</p>
                 }
-                <button>Sign Up</button>
+                {(this.state.status != '') &&
+                    <p>{this.state.status}</p>
+                }
+                <div>
+                    <button onClick = {this.submit}>Sign Up</button>
+                    <button onClick={this.login} >Log In</button>
+                </div>
             </div>
         );
     }
@@ -67,5 +91,47 @@ export default class SignUp extends React.Component {
             info: newInfo,
             validate: newValidate
         })
+    }
+    checkValidate = () => {
+        const validate = this.state.validate;
+        const info = this.state.info;
+
+        for (let key in validate){
+            if (!validate[key]) return false;    
+        }
+        if (info.password1 !=  info.password2) return false;
+        return true;
+    }
+    handleStatus = (status) => {
+        let message = 'Registered Successfully';
+        if (status === 1) message = 'Username existed';
+        console.log(status);
+        this.setState({
+            status: message
+        })
+    }
+    submit = () => {
+        let handleStatus = this.handleStatus;
+        if (!this.checkValidate()) return;
+        let userInfo = {
+            username: this.state.info.username,
+            password: this.state.info.password1
+        };
+
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        debugger
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                if (xhr.status === 400) handleStatus(1);
+                else handleStatus(2);
+            }
+        });
+
+        xhr.open("POST", "http://localhost:8080/api/signup");
+        xhr.send(JSON.stringify(userInfo));
+    }
+    login = () => {
+        window.location.replace('http://localhost:8080/login')
     }
 }

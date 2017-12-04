@@ -13,7 +13,7 @@
 
 .Input div {
   display: inline-block;
-  width: 30%;
+  width: 20%;
   height: 15px;
   text-align: right;
   font-weight: bold;
@@ -42,7 +42,7 @@
     display: inline-block;
     width: 130px;
     height: 35px;
-    margin: 10px auto 0px;
+    margin: 10px 10px 0px 10px;
     border: none;
     color: white;
     text-align: center;

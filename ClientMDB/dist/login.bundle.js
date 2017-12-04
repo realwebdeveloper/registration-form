@@ -18268,7 +18268,6 @@ var Input = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
 
     _this._changeHandle = function (label, e) {
-      debugger;
       var newValue = e.target.value;
       var newMessage = "";
       var newValidate = true;
@@ -18427,8 +18426,16 @@ var Login = function (_React$Component) {
             var xhr = new XMLHttpRequest();
             xhr.withCredentials = true;
 
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
+                    if (xhr.status == 403) {
+                        window.location.replace('http://localhost:8080/registration');
+                    }
+                }
+            });
+
             xhr.open("GET", "http://localhost:8080/redirect");
-            xhr.setRequestHeader("authKey", localStorage.authKey);
+            xhr.setRequestHeader("auth-key", localStorage.authKey);
             xhr.send();
         };
 
@@ -18441,25 +18448,41 @@ var Login = function (_React$Component) {
                 info: newInfo,
                 validate: newValidate
             });
-            _this.pushToServer(_this.state.info);
         };
 
-        _this.pushToServer = function (data) {
-            debugger;
+        _this.handleStatus = function () {
+            _this.setState({
+                status: 'Your username / password is incorrect'
+            });
+        };
+
+        _this.login = function () {
+            var handleStatus = _this.handleStatus;
+            var redirect = _this.redirect;
+
+            var info = _this.state.info;
 
             var xhr = new XMLHttpRequest();
             xhr.withCredentials = true;
 
             xhr.addEventListener("readystatechange", function () {
-                console.log(this.readyState);
-                if (this.readyState === 1) {
-                    location.reload();
+                if (this.readyState === 4) {
+                    if (xhr.status === 401) handleStatus();else {
+                        localStorage.setItem('authKey', this.responseText);
+                        alert('Loged in successfully');
+                        redirect();
+                    }
                 }
             });
 
-            xhr.open("POST", "http://localhost:8080/api/Login");
-            xhr.setRequestHeader("accept", "application/json");
-            xhr.send(JSON.stringify(data));
+            xhr.open("GET", "http://localhost:8080/api/login");
+            xhr.setRequestHeader('username', info.username);
+            xhr.setRequestHeader('password', info.password);
+            xhr.send();
+        };
+
+        _this.signUp = function () {
+            window.location.replace('http://localhost:8080/signup');
         };
 
         _this.state = {
@@ -18470,7 +18493,8 @@ var Login = function (_React$Component) {
             validate: {
                 username: false,
                 password: false
-            }
+            },
+            status: ''
         };
         _this.redirect();
         return _this;
@@ -18503,10 +18527,24 @@ var Login = function (_React$Component) {
                     changeHandle: this._changHandle,
                     validate: this.state.validate.password
                 }),
-                _react2.default.createElement(
-                    'button',
+                this.state.status != '' && _react2.default.createElement(
+                    'p',
                     null,
-                    'Log In'
+                    this.state.status
+                ),
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: this.login },
+                        'Log In'
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: this.signUp },
+                        'Sign Up'
+                    )
                 )
             );
         }

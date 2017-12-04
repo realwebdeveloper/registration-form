@@ -11,14 +11,14 @@
         color: grey;
         margin-bottom: 50px;
     }
-    &:first-child {
-        >div {
+    >div {
+      &:first-of-type {
             display: flex;
             justify-content: space-around;
             >div {
                 &:nth-child(2) {
                     flex-grow: 3;
-                    width: 60%;
+                    width: 100%;
                 }
             }
         }
