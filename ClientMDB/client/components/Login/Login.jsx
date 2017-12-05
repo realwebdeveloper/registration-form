@@ -32,8 +32,13 @@ export default class Login extends React.Component {
         xhr.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
               if (this.responseText == 'true') {
+                console.log('CheckAuth successfully');
                 changeState('checkAuth', true);
-              } else changeState('checkAuth', false);
+              }
+              else {
+                console.log('CheckAuth failed');                
+                changeState('checkAuth', false);
+              }
             }
         })
 
@@ -42,7 +47,7 @@ export default class Login extends React.Component {
         xhr.send();
     }
     render() {
-        if (this.state.checkauth) {
+        if (this.state.checkAuth) {
           return (
             <Redirect to={'/registration'}></Redirect>
           )
@@ -73,7 +78,7 @@ export default class Login extends React.Component {
                 }
                 <div>
                     <button onClick = {this.login} >Log In</button>
-                    <button onClick = {this.signUp} >Sign Up</button>
+                    <button>Sign Up</button>
                 </div>                
             </div>
         );
@@ -95,7 +100,7 @@ export default class Login extends React.Component {
     }
     login = () => {
       var handleStatus = this.handleStatus;
-      var redirect = this.redirect;
+      var checkAuth = this.checkAuth;
 
       var info = this.state.info;
 
@@ -109,7 +114,7 @@ export default class Login extends React.Component {
             {
               localStorage.setItem('authKey', this.responseText);
               alert('Loged in successfully');
-              redirect();
+              checkAuth();
             }
         }
       });

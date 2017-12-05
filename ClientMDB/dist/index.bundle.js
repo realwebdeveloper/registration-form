@@ -23655,8 +23655,12 @@ var Login = function (_React$Component) {
             xhr.addEventListener("readystatechange", function () {
                 if (this.readyState === 4) {
                     if (this.responseText == 'true') {
+                        console.log('CheckAuth successfully');
                         changeState('checkAuth', true);
-                    } else changeState('checkAuth', false);
+                    } else {
+                        console.log('CheckAuth failed');
+                        changeState('checkAuth', false);
+                    }
                 }
             });
 
@@ -23684,7 +23688,7 @@ var Login = function (_React$Component) {
 
         _this.login = function () {
             var handleStatus = _this.handleStatus;
-            var redirect = _this.redirect;
+            var checkAuth = _this.checkAuth;
 
             var info = _this.state.info;
 
@@ -23696,7 +23700,7 @@ var Login = function (_React$Component) {
                     if (xhr.status === 401) handleStatus();else {
                         localStorage.setItem('authKey', this.responseText);
                         alert('Loged in successfully');
-                        redirect();
+                        checkAuth();
                     }
                 }
             });
@@ -23726,7 +23730,7 @@ var Login = function (_React$Component) {
     _createClass(Login, [{
         key: 'render',
         value: function render() {
-            if (this.state.checkauth) {
+            if (this.state.checkAuth) {
                 return _react2.default.createElement(_reactRouter.Redirect, { to: '/registration' });
             }
             return _react2.default.createElement(
@@ -23768,7 +23772,7 @@ var Login = function (_React$Component) {
                     ),
                     _react2.default.createElement(
                         'button',
-                        { onClick: this.signUp },
+                        null,
                         'Sign Up'
                     )
                 )
@@ -24129,7 +24133,7 @@ var App = function (_Component) {
 
     _this.logOut = function () {
       localStorage.removeItem('authKey');
-      _this.redirect();
+      _this.checkAuth();
     };
 
     _this.state = {

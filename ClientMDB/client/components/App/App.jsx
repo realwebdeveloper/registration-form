@@ -104,6 +104,6 @@ export default class App extends Component {
   }
   logOut = () => {
     localStorage.removeItem('authKey');
-    this.redirect();
+    this.checkAuth();
   }
 }

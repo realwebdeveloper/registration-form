@@ -15,14 +15,18 @@ router.get('/check-auth', function (req, res) {
   
   database.findOne('accounts',JSON.parse(userInfo), (found) => {
     checkAuth = found;
+    if (checkAuth) {
+        res.status(200).send('true').end();
+    }
+    else {
+        res.status(200).send('false').end();
+    }
   })
-  if (checkAuth) res.send('true')
-  else res.send('false')
 })
 
 router.get('/ListUserInfo', function (req, res) {
     database.queryAll('peopleList', function(data){
-        res.send(data);
+        res.send(data).end();
     })
 })
 
@@ -34,11 +38,10 @@ router.get('/login', function (req, res) {
     database.findOne('accounts', userinfo, (found) => {
         let checkLogin = found;
         if (checkLogin) {
-            res.status(200).send(security.encrypt(JSON.stringify(userinfo)), () => { response.end(); });
+            res.status(200).send(security.encrypt(JSON.stringify(userinfo))).end();
         }
         else {
-            res.sendStatus(401);
-            res.end();
+            res.sendStatus(401).end();
         }
     });
 })
@@ -70,7 +73,7 @@ router.post('/signup', function(req, res){
 
         database.findOne('accounts', userAccount, function (found) {
             if (found) {
-                res.sendStatus(400);
+                res.sendStatus(400).end();
             }
             else {
                 database.insert('accounts', json);
