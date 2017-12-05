@@ -39,6 +39,7 @@ module.exports = {
     ]
   },
   plugins: [
+    HtmlWebpackPluginConfig,
     extractSass
   ]
 }
