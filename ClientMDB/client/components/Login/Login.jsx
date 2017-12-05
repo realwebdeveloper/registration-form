@@ -2,6 +2,7 @@ import React from 'react';
 import Input from '../Input/Input.jsx';
 import './Login.scss'
 import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 
 export default class Login extends React.Component {
     constructor(props){
@@ -77,8 +78,10 @@ export default class Login extends React.Component {
                   <p>{this.state.status}</p>
                 }
                 <div>
-                    <button onClick = {this.login} >Log In</button>
+                  <button onClick = {this.login} >Log In</button>
+                  <Link to='/signup'>
                     <button>Sign Up</button>
+                  </Link>
                 </div>                
             </div>
         );

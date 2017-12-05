@@ -1,7 +1,8 @@
 import React from 'react';
 import Input from '../Input/Input.jsx';
 import './SignUp.scss'
-import { Redirect, Link } from 'react-router';
+import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 
 export default class SignUp extends React.Component {
     constructor(props){
@@ -93,7 +94,9 @@ export default class SignUp extends React.Component {
                 }
                 <div>
                     <button onClick = {this.submit}>Sign Up</button>
-                    <button>Log In</button>
+                    <Link to='/login'>
+                        <button>Log In</button>
+                    </Link>
                 </div>
             </div>
         );
