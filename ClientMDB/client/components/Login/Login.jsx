@@ -119,6 +119,4 @@ export default class Login extends React.Component {
       xhr.setRequestHeader('password', info.password);
       xhr.send();
     }
-    signUp = () => {
-    }
 }

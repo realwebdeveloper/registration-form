@@ -5,6 +5,9 @@ const app = express()
 const staticPath = '../ClientMDB/dist';
 const api = require('./apiRouter');
 
+app.get(/^\/[a-z]*$/, (req, res) => {
+  res.sendFile(path.join(__dirname, staticPath, '/index.html'))
+})
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, staticPath, '/index.html'))

@@ -1,7 +1,7 @@
 import React from 'react';
 import Input from '../Input/Input.jsx';
 import './SignUp.scss'
-import { Redirect } from 'react-router';
+import { Redirect, Link } from 'react-router';
 
 export default class SignUp extends React.Component {
     constructor(props){
@@ -18,7 +18,7 @@ export default class SignUp extends React.Component {
                 password2: false
             },
             status: '',
-            checkAuth: true
+            checkAuth: false
         }
       this.checkAuth();
     }
@@ -30,12 +30,16 @@ export default class SignUp extends React.Component {
     checkAuth = () => {
         let xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
+
         let changeState = this._changeState
+
         xhr.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
               if (this.responseText == 'true') {
                 changeState('checkAuth', true);
-              } else changeState('checkAuth', false);
+              } else {
+                changeState('checkAuth', false);
+              }
             }
         })
 
@@ -89,7 +93,7 @@ export default class SignUp extends React.Component {
                 }
                 <div>
                     <button onClick = {this.submit}>Sign Up</button>
-                    <button onClick={this.login} >Log In</button>
+                    <button>Log In</button>
                 </div>
             </div>
         );
@@ -142,8 +146,5 @@ export default class SignUp extends React.Component {
 
         xhr.open("POST", "http://localhost:8080/api/signup");
         xhr.send(JSON.stringify(userInfo));
-    }
-    login = () => {
-        window.location.replace('http://localhost:8080/login')
     }
 }
