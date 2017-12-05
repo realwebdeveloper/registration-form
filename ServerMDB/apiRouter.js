@@ -1,7 +1,24 @@
 var express = require('express')
 var router = express.Router();
 var database = require('./database');
+var security = require('./security')
 
+router.get('/check-auth', function (req, res) {
+  let userInfo = req.headers['auth-key'];
+  if (!userInfo || userInfo == 'undefined') 
+  {
+    userInfo = security.encrypt(JSON.stringify({username: '', password: ''}));
+  }
+  let checkAuth = false;
+  
+  userInfo = security.decrypt(userInfo);
+  
+  database.findOne('accounts',JSON.parse(userInfo), (found) => {
+    checkAuth = found;
+  })
+  if (checkAuth) res.send('true')
+  else res.send('false')
+})
 
 router.get('/ListUserInfo', function (req, res) {
     database.queryAll('peopleList', function(data){

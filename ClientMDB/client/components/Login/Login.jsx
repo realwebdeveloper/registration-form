@@ -1,6 +1,7 @@
 import React from 'react';
 import Input from '../Input/Input.jsx';
 import './Login.scss'
+import { Redirect } from 'react-router';
 
 export default class Login extends React.Component {
     constructor(props){
@@ -14,27 +15,38 @@ export default class Login extends React.Component {
                 username: false,
                 password: false
             },
-            status: ''
+            status: '',
+            checkauth: false
         }
-        this.redirect();
+        this.checkAuth();
     }
-    redirect = () => {
+    _changeState = (property, value) => {
+      this.setState({
+        [property]: value
+      })
+    }
+    checkAuth = () => {
         let xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
-
+        let changeState = this._changeState
         xhr.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
-                if (xhr.status == 403){
-                    window.location.replace('http://localhost:8080/registration');
-                }
+              if (this.responseText == 'true') {
+                changeState('checkAuth', true);
+              } else changeState('checkAuth', false);
             }
         })
 
-        xhr.open("GET", "http://localhost:8080/api/redirect");
+        xhr.open("GET", "http://localhost:8080/api/check-auth");
         xhr.setRequestHeader("auth-key", localStorage.authKey);
         xhr.send();
     }
     render() {
+        if (this.state.checkauth) {
+          return (
+            <Redirect to={'/registration'}></Redirect>
+          )
+        }
         return (
             <div className='Login'>
                 <h1>Log In</h1>
@@ -108,6 +120,5 @@ export default class Login extends React.Component {
       xhr.send();
     }
     signUp = () => {
-        window.location.replace('http://localhost:8080/signup');
     }
 }

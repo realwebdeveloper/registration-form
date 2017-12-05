@@ -2,17 +2,24 @@ import React, { Component } from 'react';
 import Form from '../Form/Form.jsx';
 import Table from '../Table/Table.jsx';
 import './App.scss'
+import { Redirect } from 'react-router';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      listUserInfo: []
+      listUserInfo: [],
+      checkAuth: true
     }
+    this.checkAuth();
     this.getServerData();
-    this.redirect();
   }
   render() {
+    if (!this.state.checkAuth) {
+      return (
+        <Redirect to={'/login'}/>
+      )
+    }
     return (
       <div className='page'>
         <div>
@@ -27,20 +34,24 @@ export default class App extends Component {
       </div>
     );
   }
-  redirect = () => {
+  _changeState = (property, value) => {
+    this.setState({
+      [property]: value
+    })
+  }
+  checkAuth = () => {
     let xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
-
+    let changeState = this._changeState
     xhr.addEventListener("readystatechange", function () {
-      if (this.readyState === 4) {
-        debugger
-        if (xhr.status == 403) {
-          window.location.replace('http://localhost:8080/login');
+        if (this.readyState === 4) {
+            if (this.responseText == 'true') {
+              changeState('checkAuth', true);
+            } else changeState('checkAuth', false);
         }
-      }
     })
 
-    xhr.open("GET", "http://localhost:8080/api/redirect");
+    xhr.open("GET", "http://localhost:8080/api/check-auth");
     xhr.setRequestHeader("auth-key", localStorage.authKey);
     xhr.send();
   }

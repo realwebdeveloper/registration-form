@@ -9,6 +9,7 @@ export default class Page extends React.Component {
         return (
         <div>
             <Switch>
+                <Route exact path='/' component={Login}/>
                 <Route exact path='/login' component={Login} />
                 <Route exact path='/signup' component={SignUp} />
                 <Route exact path='/registration' component={App} />
