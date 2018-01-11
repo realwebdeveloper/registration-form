@@ -26,7 +26,6 @@ export default class Form extends Component {
         city: true
       }
     }
-    this.redirect();
   }
   render() {
     return (
@@ -99,14 +98,6 @@ export default class Form extends Component {
         <button onClick={this._addUserInfo}> Submit </button>
       </div>
     );
-  }
-  redirect = () => {
-    let xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;
-
-    xhr.open("GET", "http://localhost:8080/redirect");
-    xhr.setRequestHeader("auth-key", localStorage.authKey);
-    xhr.send();
   }
   _changHandle = (property, value, validate) => {
     let newInfo = JSON.parse(JSON.stringify(this.state.info));

@@ -1,6 +1,7 @@
 import React from 'react';
 import Input from '../Input/Input.jsx';
 import './SignUp.scss'
+import { Redirect, Link } from 'react-router';
 
 export default class SignUp extends React.Component {
     constructor(props){
@@ -16,27 +17,42 @@ export default class SignUp extends React.Component {
                 password1: false,
                 password2: false
             },
-            status: ''
+            status: '',
+            checkAuth: false
         }
-      this.redirect();
+      this.checkAuth();
     }
-    redirect = () => {
+    _changeState = (property, value) => {
+      this.setState({
+        [property]: value
+      })
+    }
+    checkAuth = () => {
         let xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
 
+        let changeState = this._changeState
+
         xhr.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
-                if (xhr.status == 403) {
-                    window.location.replace('http://localhost:8080/registration');
-                }
+              if (this.responseText == 'true') {
+                changeState('checkAuth', true);
+              } else {
+                changeState('checkAuth', false);
+              }
             }
         })
 
-        xhr.open("GET", "http://localhost:8080/redirect");
+        xhr.open("GET", "http://localhost:8080/api/check-auth");
         xhr.setRequestHeader("auth-key", localStorage.authKey);
         xhr.send();
     }
     render() {
+        if (this.state.checkAuth) {
+          return (
+            <Redirect to={'/registration'}/>
+          )
+        }
         return (
             <div className='SignUp'>
                 <h1>Sign Up</h1>
@@ -77,7 +93,7 @@ export default class SignUp extends React.Component {
                 }
                 <div>
                     <button onClick = {this.submit}>Sign Up</button>
-                    <button onClick={this.login} >Log In</button>
+                    <button>Log In</button>
                 </div>
             </div>
         );
@@ -130,8 +146,5 @@ export default class SignUp extends React.Component {
 
         xhr.open("POST", "http://localhost:8080/api/signup");
         xhr.send(JSON.stringify(userInfo));
-    }
-    login = () => {
-        window.location.replace('http://localhost:8080/login')
     }
 }
